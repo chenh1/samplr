@@ -4,6 +4,7 @@ import MainControls from '../organisms/MainControls';
 import Track from '../organisms/Track';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {compose, pure} from 'recompose';
 import * as actions from '../../actions/trackManageActions';
 
 const MainPage = (props) => {
@@ -36,4 +37,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  pure //once props grow, convert to onlyUpdateForKeys
+)(MainPage);

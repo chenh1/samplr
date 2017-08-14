@@ -5,7 +5,7 @@ export default function trackManageReducer(state = initialState.tracks, action) 
 
     switch (action.type) {
         case 'ADD_TRACK':
-            newState = [...state, 1];
+            newState = [...state, 1]; //@todo CHANGE 1 TO AN OBJECT REPRESENTING A TRACK
             return newState;
         default:
             return state;

@@ -2,10 +2,10 @@ import React from 'react';
 import TrackControl from '../molecules/TrackControl';
 import BeatGrid from '../molecules/BeatGrid';
 
-const TempoControl = ({min, max}) => {
+const TempoControl = ({min, max, trackId, setTrackEffects}) => {
     return (
         <div className="">
-            <TrackControl />
+            <TrackControl trackId={trackId} setTrackEffects={setTrackEffects}/>
             <BeatGrid />
         </div>
     );

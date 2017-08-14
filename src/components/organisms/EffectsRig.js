@@ -11,7 +11,7 @@ const EffectsRig = (props) => {
         <div>
             <p>Track No: {props.track.id}</p>
             <p>Divisions: {props.track.divisions}</p>
-            <button onClick={props.actions.toggleReverb}>Trigger change</button>
+            <button onClick={props.actions.toggleReverbAsync}>Trigger change</button>
             <p>Reverb toggled {props.counter} times</p>
         </div>
     );

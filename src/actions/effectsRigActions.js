@@ -10,3 +10,21 @@ export function toggleReverb() {
         type: 'TOGGLE_REVERB'
     };
 }
+
+export function toggleReverbAsync() {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(toggleReverb());
+        }, 500);
+    }
+
+    /*
+    return dispatch => {
+        return fetch(url).then(data => {
+            dispatch(toggleReverb());
+        }).catch(error => {
+            throw(error);
+        });
+    }
+    */
+}

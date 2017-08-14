@@ -3,7 +3,7 @@ import React from 'react';
 const BeatNode = ({}) => {
     return (
         <div className="">
-            B
+            <button>B</button>
         </div>
     );
 };

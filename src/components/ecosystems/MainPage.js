@@ -2,20 +2,23 @@ import React from 'react';
 import {Link} from 'react-router';
 import MainControls from '../organisms/MainControls';
 import Track from '../organisms/Track';
+import EffectsRig from '../organisms/EffectsRig';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as actions from '../../actions/trackManageActions';
+import {compose, pure} from 'recompose';
+import * as trackManageActions from '../../actions/trackManageActions';
+import * as effectsRigActions from '../../actions/effectsRigActions';
 
 const MainPage = (props) => {
   return (
     <div>
-      <h1>samplr</h1>
-
       <MainControls />
+
+      <EffectsRig onClick={props.actions.toggleReverb}/>
 
       {props.tracks.map((track, index) => {
         return (
-          <Track key={track + index} />
+          <Track key={track + index} trackId={track.id} setTrackEffects={props.actions.setTrackEffects} />
         );
       })}
       
@@ -32,8 +35,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(Object.assign({}, trackManageActions, effectsRigActions), dispatch)
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  pure //once props grow, convert to onlyUpdateForKeys
+)(MainPage);

@@ -12,6 +12,7 @@ class App extends React.Component {
         <IndexLink to="/">Home</IndexLink>
         {' | '}
         <br/>
+        <h1>samplr</h1>
         {this.props.children}
       </div>
     );

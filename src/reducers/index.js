@@ -16,7 +16,7 @@ export const trackIdSelector = state => state.visibleEffect.id;
 export const getTrack = createSelector(
     trackSelector, trackIdSelector,
     (tracks, visibleEffectId) => {
-        console.log('ran');
+        console.log('ran', tracks, visibleEffectId);
         return tracks.find(track => track.id === visibleEffectId)
     }
 );

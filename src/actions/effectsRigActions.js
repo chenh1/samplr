@@ -1,4 +1,5 @@
 export function setTrackEffects(e) {
+    console.log(e.target.value);
     return {
         type: 'SET_TRACK_EFFECTS',
         trackId: parseInt(e.target.value, 10)
@@ -15,7 +16,7 @@ export function toggleReverbAsync() {
     return dispatch => {
         setTimeout(() => {
             dispatch(toggleReverb());
-        }, 500);
+        }, 1500);
     }
 
     /*

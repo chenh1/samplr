@@ -9,22 +9,32 @@ import {compose, pure} from 'recompose';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 
-const MainPage = (props) => {
-  return (
-    <div>
-      <MainControls />
+class MainPage extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+  }
 
-      <EffectsRig onClick={props.actions.toggleReverb}/>
+  componentDidMount() {
+    this.props.actions.loadTracks();
+  }
 
-      {props.tracks.map((track, index) => {
-        return (
-          <Track key={track + index} trackId={track.id} setTrackEffects={props.actions.setTrackEffects} />
-        );
-      })}
-      
-      <button onClick={props.actions.addTrack}>Add</button>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <MainControls />
+
+        <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
+
+        {this.props.tracks.map((track, index) => {
+          return (
+            <Track key={track.id + index} trackId={track.id} setTrackEffects={this.props.actions.setTrackEffects} />
+          );
+        })}
+        
+        <button onClick={this.props.actions.addTrack}>Add</button>
+      </div>
+    );
+  }
 };
 
 function mapStateToProps(state) {

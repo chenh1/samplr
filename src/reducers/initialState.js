@@ -6,11 +6,7 @@ export default {
   tracks: [
     {
       id: 0,
-      divisions: 4
-    },
-    {
-      id: 1,
-      divisions: 16
+      divisions: 0
     }
   ]
 };

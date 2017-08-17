@@ -13,7 +13,6 @@ deploy:
   provider: firebase
   token:
     secure: qPzvxtszxnZo9tUWMZwmzPMNKA6oUeOc1P5YljIRKHomEkSTlY6MEaykRjudtVngTXyXnzHZ/NNDEPPIo7P4uS/AFeTBZIxhAxcXcRUElqGp5GvWKfKrWqJxWfd4hrbOrh2ojtN7l8INGBaR3QOyafFoc8YKmOg3xC/hvxBAwMxazuH9czpJkz+VKLitZF87Rt//4uWt16w970lGWCPUHdkausSWpufaL+LTcG5lMeckdQoeqltIge5zYiuozT148+ofk8StIXjMjZRbQ+iLDbEKvMo3MUzWNwzIaQYj5yWYR0zo5YFD5t4/246vWz6qwmuhpEnWwmUholAvWPJGx26ECpG4WTfMA5vBmFQBBbX0TYj/Q8zJvDkulcHAN86gkEnDPfeKpPE+otIDZzzpkNGlTKx6k+aVYqm/kCkzGfG6TwzJqJOZySDZVsVATCJSm1BsXIX4HeDABZG+DPOA6tkInUn1Pj7oesgCHE9qVsAjPguOv4qGi118wPQ4W/u9rghEZXkRKmiy1uS/abXuEThc9pYkQ70WBLlFLEzvhryES2uFGui5rJX/qwjxnBVRC4BSYB8rb/LSuzXemq2ZCj1cvKGGwqU0e4lMUxT3pLTavNDCeiAFtQHKim9N22khs3W+r/NLeK1QnLGPknPNG9rOyRAoTQxzY0pdqQQLxas=
-  project: "sodium-ray-106319"
   message: "Deploy Destination: project sodium-ray-106319 on FIREBASE"
   before_deploy: "echo 'Starting build for UI repo'"
   after_deploy: "echo 'Build for UI repo to firebase completed!'"

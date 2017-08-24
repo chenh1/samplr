@@ -23,6 +23,23 @@ class MainPage extends React.Component {
       <div>
         <MainControls />
 
+        <div>
+          TEST AUDIO
+          <audio id="testAudio" src="http://www.noiseaddicts.com/samples_1w72b820/4353.mp3" type="audio/mpeg" />
+        </div>
+        <div>
+          TEST AUDIO 2
+          <audio id="testAudio2" src="http://www.noiseaddicts.com/samples_1w72b820/4156.mp3" type="audio/mpeg" />
+        </div>
+        <div>
+          TEST AUDIO 3
+          <audio id="testAudio3" src="http://www.noiseaddicts.com/samples_1w72b820/4172.mp3" type="audio/mpeg" />
+        </div>
+        <div>
+          TEST AUDIO 4
+          <audio loop id="testAudio4" src="http://www.noiseaddicts.com/samples_1w72b820/3694.mp3" type="audio/mpeg" />
+        </div>
+
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
 
         {this.props.tracks.map((track, index) => {

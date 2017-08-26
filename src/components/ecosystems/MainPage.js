@@ -44,7 +44,7 @@ class MainPage extends React.Component {
 
         {this.props.tracks.map((track, index) => {
           return (
-            <Track key={track.id + index} trackId={track.id} setTrackEffects={this.props.actions.setTrackEffects} />
+            <Track key={'track' + index} trackId={track.id} setTrackEffects={this.props.actions.setTrackEffects} />
           );
         })}
         

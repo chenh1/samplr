@@ -1,9 +1,10 @@
 import React from 'react';
+import '../../styles/beatNode.scss';
 
 const BeatNode = ({}) => {
     return (
-        <div className="">
-            <button>BeatNode</button>
+        <div>
+            <button className="beat-node">BeatNode</button>
         </div>
     );
 };

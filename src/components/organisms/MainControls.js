@@ -9,7 +9,7 @@ const MainControls = ({}) => {
             <button>Start</button>
             <button>Stop</button>
             <TimeSignature min="1" max="20" />
-            <TempoControl min="1" max="300" />
+            <TempoControl min="1" max="300" value="120" />
         </div>
     );
 };

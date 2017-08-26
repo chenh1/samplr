@@ -3,6 +3,7 @@ export default {
     id: 0,
     counter: 0
   },
+  tempo: 120,
   tracks: [
     {
       id: 0,

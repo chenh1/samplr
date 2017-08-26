@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Spinner = ({min, max}) => {
+const Spinner = ({min, max, value}) => {
     return (
-        <input type="number" min={min} max={max} />
+        <input type="number" min={min} max={max} value={value} />
     );
 };
 

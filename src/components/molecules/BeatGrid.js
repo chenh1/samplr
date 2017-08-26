@@ -1,12 +1,13 @@
 import React from 'react';
 import BeatNode from '../atoms/BeatNode';
 import '../../styles/beatGrid.scss';
+import '../../styles/styles.scss';
 
-const TempoControl = ({beats}) => {
+const BeatGrid = ({beats}) => {
     const mockBeats = [1, 2, 3, 4];
 
     return (
-        <div className="beat-grid">
+        <div className="beat-grid right-rail">
             {mockBeats.map(beat => {
                 return (<BeatNode key={beat} />)
             })}
@@ -14,4 +15,4 @@ const TempoControl = ({beats}) => {
     );
 };
 
-export default TempoControl;
+export default BeatGrid;

@@ -5,7 +5,10 @@ export default function trackManageReducer(state = initialState.tracks, action) 
 
     switch (action.type) {
         case 'ADD_TRACK':
-            newState = [...state, 1]; //@todo CHANGE 1 TO AN OBJECT REPRESENTING A TRACK
+            newState = [...state, {
+                id: state.length,
+                divisions: 4 //@todo CHANGE 4 TO BPM WHEN LOGIC IS IMPLEMENTED
+            }]; 
             return newState;
         case 'TRACKS_LOADED':
             newState = [...state, ...action.tracks];

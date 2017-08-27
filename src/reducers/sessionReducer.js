@@ -18,6 +18,12 @@ export default function trackManageReducer(state = initialState.session, action)
         case 'LOOP_LIVE_NODE':
             newState.liveNode = 0;
             return newState;
+        case 'RECORD_START':
+            newState.recording = true;
+            return newState;
+        case 'RECORD_STOP':
+            newState.recording = false;
+            return newState;
         default:
             return state;
     }

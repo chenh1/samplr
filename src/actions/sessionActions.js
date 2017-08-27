@@ -21,3 +21,15 @@ export function loopLiveNode() {
         type: 'LOOP_LIVE_NODE'
     }
 }
+
+export function recordStart() {
+    return {
+        type: 'RECORD_START'
+    }
+}
+
+export function recordStop() {
+    return {
+        type: 'RECORD_STOP'
+    }
+}

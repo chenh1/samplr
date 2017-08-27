@@ -1,6 +1,7 @@
 export default {
   session: {
     play: false,
+    recording: false,
     tempo: 120,
     liveNode: -1 //not live
   },

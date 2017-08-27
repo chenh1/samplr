@@ -13,6 +13,11 @@ export default function trackManageReducer(state = initialState.tracks, action) 
         case 'TRACKS_LOADED':
             newState = [...state, ...action.tracks];
             return newState;
+        case 'STOP_RECORDING':
+            newState = state.slice();
+            console.log(action.trackId)
+            newState[parseInt(action.trackId, 10)].src = action.audioSrc;
+            return newState;
         default:
             return state;
     }

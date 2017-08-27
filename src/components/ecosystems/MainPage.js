@@ -17,7 +17,9 @@ class MainPage extends React.Component {
 
     this.playProject = this.playProject.bind(this);
     this.stopProject = this.stopProject.bind(this);
+    this.recordTrack = this.recordTrack.bind(this);
     this.setLooper;
+    this.recorder;
   }
 
   componentDidMount() {
@@ -28,6 +30,12 @@ class MainPage extends React.Component {
     const beatInterval = (60 / this.props.session.tempo) * 1000;
 
     this.props.actions.playProject();
+
+    [].slice.call(document.querySelectorAll('audio')).forEach((track) => {
+      if (track.getAttribute('src') !== '') {
+        track.play();
+      }
+    })
 
     this.setLooper = setInterval(() => {
       if (this.props.session.liveNode < 3) {
@@ -41,6 +49,33 @@ class MainPage extends React.Component {
   stopProject() {
     clearInterval(this.setLooper);
     this.props.actions.stopProject();
+    
+    if (this.recorder && this.recorder.state !== "inactive") {
+      console.log('stop recording!')
+      this.recorder.stop();
+    }
+  }
+
+  recordTrack(e) {
+    const eventTrackId = parseInt(e.target.getAttribute('data-track-id'), 10);
+
+    this.props.actions.recordStart();
+
+    let audioChunks = [];
+
+    navigator.mediaDevices.getUserMedia({audio:true})
+      .then(stream => {
+        this.recorder = new MediaRecorder(stream);
+        this.recorder.ondataavailable = e => {
+          audioChunks.push(e.data);
+          if (this.recorder.state == "inactive"){
+            let blob = new Blob(audioChunks,{type:'audio/x-mpeg-3'});
+            console.log('recorder stopped')
+            this.props.actions.stopRecording(URL.createObjectURL(blob), eventTrackId);
+          }
+        }
+        this.recorder.start();
+      }).catch(e => console.log(e));
   }
 
   render() {
@@ -52,12 +87,14 @@ class MainPage extends React.Component {
 
         {this.props.tracks.map((track, index) => {
           return (
-            <Track 
-              recordStart={this.props.actions.recordStart}
+            <Track
+              audioSrc={track.src}
+              recordStart={this.recordTrack}
               key={'track' + index} 
               trackId={track.id} 
               setTrackEffects={this.props.actions.setTrackEffects} 
-              liveNode={this.props.session.liveNode}/>
+              liveNode={this.props.session.liveNode}
+              playing={this.props.session.play} />
           );
         })}
         

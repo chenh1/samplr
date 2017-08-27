@@ -27,9 +27,3 @@ export function recordStart() {
         type: 'RECORD_START'
     }
 }
-
-export function recordStop() {
-    return {
-        type: 'RECORD_STOP'
-    }
-}

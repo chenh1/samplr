@@ -21,9 +21,6 @@ export default function trackManageReducer(state = initialState.session, action)
         case 'RECORD_START':
             newState.recording = true;
             return newState;
-        case 'RECORD_STOP':
-            newState.recording = false;
-            return newState;
         default:
             return state;
     }

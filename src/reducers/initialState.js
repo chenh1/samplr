@@ -12,7 +12,8 @@ export default {
   tracks: [
     {
       id: 0,
-      divisions: 0
+      divisions: 0,
+      src: ''
     }
   ]
 };

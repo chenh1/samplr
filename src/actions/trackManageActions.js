@@ -25,3 +25,12 @@ export function loadTracks() {
         });
     };
 }
+
+export function stopRecording(audioSrc, trackId) {
+    console.log(audioSrc, trackId)
+    return {
+        type: 'STOP_RECORDING',
+        audioSrc,
+        trackId
+    }
+}

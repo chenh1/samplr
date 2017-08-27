@@ -10,9 +10,9 @@ const HeadRail = ({}) => {
             <div className="left-rail">
             </div>
             <div className="node-grid right-rail">
-                {mockNodes.map(node => {
+                {mockNodes.map((node, index) => {
                     return (
-                        <div>
+                        <div key={'marker' + index}>
                             <button className="beat-marker">Marker</button>
                         </div>
                     );

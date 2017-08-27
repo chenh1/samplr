@@ -3,10 +3,10 @@ import TimeSignature from '../molecules/TimeSignature';
 import TempoControl from '../molecules/TempoControl';
 import Spinner from '../atoms/Spinner';
 
-const MainControls = ({}) => {
+const MainControls = ({playProject}) => {
     return (
         <div>
-            <button>Start</button>
+            <button onClick={playProject}>Play</button>
             <button>Stop</button>
             <TimeSignature min="1" max="20" />
             <TempoControl min="1" max="300" value="120" />

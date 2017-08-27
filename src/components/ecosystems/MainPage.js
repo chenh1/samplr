@@ -9,6 +9,7 @@ import {bindActionCreators} from 'redux';
 import {compose, pure} from 'recompose';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
+import * as sessionActions from '../../actions/sessionActions';
 
 class MainPage extends React.Component {
   constructor(props, context) {
@@ -22,12 +23,17 @@ class MainPage extends React.Component {
   render() {
     return (
       <div>
-        <MainControls />
+        <MainControls playProject={this.props.actions.playProject}/>
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
         <HeadRail />
+
         {this.props.tracks.map((track, index) => {
           return (
-            <Track key={'track' + index} trackId={track.id} setTrackEffects={this.props.actions.setTrackEffects} />
+            <Track 
+              key={'track' + index} 
+              trackId={track.id} 
+              setTrackEffects={this.props.actions.setTrackEffects} 
+              liveNode={this.props.session.liveNode}/>
           );
         })}
         
@@ -38,14 +44,21 @@ class MainPage extends React.Component {
 };
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
+    session: state.session,
     tracks: state.tracks
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Object.assign({}, trackManageActions, effectsRigActions), dispatch)
+    actions: bindActionCreators(Object.assign(
+      {}, 
+      trackManageActions, 
+      effectsRigActions,
+      sessionActions
+    ), dispatch)
   };
 }
 

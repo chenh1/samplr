@@ -3,10 +3,12 @@ import {routerReducer} from 'react-router-redux';
 import {createSelector} from 'reselect';
 import tracks from './trackManageReducer';
 import visibleEffect from './effectsRigReducer';
+import session from './sessionReducer';
 
 const rootReducer = combineReducers({
     visibleEffect,
     tracks,
+    session,
     routing: routerReducer
 });
 
@@ -16,7 +18,6 @@ export const trackIdSelector = state => state.visibleEffect.id;
 export const getTrack = createSelector(
     trackSelector, trackIdSelector,
     (tracks, visibleEffectId) => {
-        console.log('ran', tracks, visibleEffectId);
         return tracks.find(track => track.id === visibleEffectId)
     }
 );
@@ -29,7 +30,6 @@ export const getTrackNoReselect = state => {
     const track = tracks.find((track) => {
         return track.id === trackId;
     });
-    console.log('ran');
     return track;
 }
 

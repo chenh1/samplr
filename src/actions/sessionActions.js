@@ -4,8 +4,20 @@ export function playProject() {
     };
 }
 
-export function toggleReverb() {
+export function stopProject() {
     return {
-        type: 'TOGGLE_REVERB'
+        type: 'STOP_PROJECT'
     };
+}
+
+export function incrementLiveNode() {
+    return {
+        type: 'INCREMENT_LIVE_NODE'
+    }
+}
+
+export function loopLiveNode() {
+    return {
+        type: 'LOOP_LIVE_NODE'
+    }
 }

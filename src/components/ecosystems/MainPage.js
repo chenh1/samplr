@@ -14,16 +14,39 @@ import * as sessionActions from '../../actions/sessionActions';
 class MainPage extends React.Component {
   constructor(props, context) {
     super(props, context);
+
+    this.playProject = this.playProject.bind(this);
+    this.stopProject = this.stopProject.bind(this);
+    this.setLooper;
   }
 
   componentDidMount() {
     this.props.actions.loadTracks();
   }
 
+  playProject() {
+    const beatInterval = (60 / this.props.session.tempo) * 1000;
+
+    this.props.actions.playProject();
+
+    this.setLooper = setInterval(() => {
+      if (this.props.session.liveNode < 3) {
+        this.props.actions.incrementLiveNode();
+      } else {
+        this.props.actions.loopLiveNode();
+      }
+    }, beatInterval);
+  }
+
+  stopProject() {
+    clearInterval(this.setLooper);
+    this.props.actions.stopProject();
+  }
+
   render() {
     return (
       <div>
-        <MainControls playProject={this.props.actions.playProject}/>
+        <MainControls playProject={this.playProject} stopProject={this.stopProject}/>
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
         <HeadRail />
 

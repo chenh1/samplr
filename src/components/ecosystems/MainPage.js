@@ -18,6 +18,7 @@ class MainPage extends React.Component {
     this.playProject = this.playProject.bind(this);
     this.stopProject = this.stopProject.bind(this);
     this.recordTrack = this.recordTrack.bind(this);
+    this.playAllTracks = this.playAllTracks.bind(this);
     this.setLooper;
     this.recorder;
   }
@@ -26,22 +27,29 @@ class MainPage extends React.Component {
     this.props.actions.loadTracks();
   }
 
-  playProject() {
-    const beatInterval = (60 / this.props.session.tempo) * 1000;
-
-    this.props.actions.playProject();
-
+  playAllTracks() {
     [].slice.call(document.querySelectorAll('audio')).forEach((track) => {
       if (track.getAttribute('src') !== '') {
         track.play();
       }
     })
+  }
 
+  playProject() {
+    const beatInterval = (60 / this.props.session.tempo) * 1000;
+
+    this.props.actions.playProject();
+    this.playAllTracks();
+    
     this.setLooper = setInterval(() => {
       if (this.props.session.liveNode < 3) {
         this.props.actions.incrementLiveNode();
       } else {
         this.props.actions.loopLiveNode();
+        if (this.recorder && this.recorder.state !== "inactive") {
+          this.recorder.stop();
+        }
+        this.playAllTracks();
       }
     }, beatInterval);
   }
@@ -51,7 +59,6 @@ class MainPage extends React.Component {
     this.props.actions.stopProject();
     
     if (this.recorder && this.recorder.state !== "inactive") {
-      console.log('stop recording!')
       this.recorder.stop();
     }
   }
@@ -60,6 +67,7 @@ class MainPage extends React.Component {
     const eventTrackId = parseInt(e.target.getAttribute('data-track-id'), 10);
 
     this.props.actions.recordStart();
+    this.playProject();
 
     let audioChunks = [];
 

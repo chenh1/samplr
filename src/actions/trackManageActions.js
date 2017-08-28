@@ -1,21 +1,11 @@
 import 'whatwg-fetch';
 
-export function addTrack() {
-    return {
-        type: 'ADD_TRACK'
-    };
-}
+export const addTrack = () => ({ type: 'ADD_TRACK' });
 
-export function loadTracksSuccess(tracks) {
-    return {
-        type: 'TRACKS_LOADED',
-        tracks
-    };
-}
+export const loadTracksSuccess = (tracks) => ({ type: 'TRACKS_LOADED', tracks });
 
-export function loadTracks() {
-    console.log('load tracks')
-    return dispatch => {
+export const loadTracks = () => (
+    dispatch => {
         fetch('https://desolate-peak-60507.herokuapp.com/tracks').then(data => {
             return data.json();
         }).then(jsonData => {
@@ -23,14 +13,11 @@ export function loadTracks() {
         }).catch(error => {
             throw(error);
         });
-    };
-}
-
-export function stopRecording(audioSrc, trackId) {
-    console.log(audioSrc, trackId)
-    return {
-        type: 'STOP_RECORDING',
-        audioSrc,
-        trackId
     }
-}
+);
+
+export const stopRecording = (audioSrc, trackId) => ({
+    type: 'STOP_RECORDING',
+    audioSrc,
+    trackId
+});

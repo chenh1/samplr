@@ -1,29 +1,5 @@
-export function playProject() {
-    return {
-        type: 'PLAY_PROJECT'
-    };
-}
-
-export function stopProject() {
-    return {
-        type: 'STOP_PROJECT'
-    };
-}
-
-export function incrementLiveNode() {
-    return {
-        type: 'INCREMENT_LIVE_NODE'
-    }
-}
-
-export function loopLiveNode() {
-    return {
-        type: 'LOOP_LIVE_NODE'
-    }
-}
-
-export function recordStart() {
-    return {
-        type: 'RECORD_START'
-    }
-}
+export const playProject = () => ({ type: 'PLAY_PROJECT' });
+export const stopProject = () => ({ type: 'STOP_PROJECT' });
+export const incrementLiveNode = () => ({ type: 'INCREMENT_LIVE_NODE' });
+export const loopLiveNode = () => ({ type: 'LOOP_LIVE_NODE' });
+export const recordStart = () => ({ type: 'RECORD_START' });

@@ -19,6 +19,7 @@ class MainPage extends React.Component {
     this.stopProject = this.stopProject.bind(this);
     this.recordTrack = this.recordTrack.bind(this);
     this.playAllTracks = this.playAllTracks.bind(this);
+    this.uploadAudio = this.uploadAudio.bind(this);
     this.setLooper;
     this.recorder;
   }
@@ -86,6 +87,11 @@ class MainPage extends React.Component {
       }).catch(e => console.log(e));
   }
 
+  uploadAudio(e) {
+    const file = e.target.files[0];
+    this.props.actions.stopRecording(URL.createObjectURL(file), parseInt(e.target.getAttribute('data-track-id'), 10))
+  }
+
   render() {
     return (
       <div>
@@ -96,6 +102,7 @@ class MainPage extends React.Component {
         {this.props.tracks.map((track, index) => {
           return (
             <Track
+              uploadAudio={this.uploadAudio}
               audioSrc={track.src}
               recordStart={this.recordTrack}
               key={'track' + index} 

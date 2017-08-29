@@ -16,8 +16,8 @@ export const loadTracks = () => (
     }
 );
 
-export const stopRecording = (audioSrc, trackId) => ({
+export const stopRecording = (clonedTrack, trackIndex) => ({
     type: 'STOP_RECORDING',
-    audioSrc,
-    trackId
+    clonedTrack,
+    trackIndex
 });

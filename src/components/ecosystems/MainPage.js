@@ -20,6 +20,7 @@ class MainPage extends React.Component {
     this.recordTrack = this.recordTrack.bind(this);
     this.playAllTracks = this.playAllTracks.bind(this);
     this.uploadAudio = this.uploadAudio.bind(this);
+    this.stopRecording = this.stopRecording.bind(this);
     this.setLooper;
     this.recorder;
   }
@@ -64,6 +65,19 @@ class MainPage extends React.Component {
     }
   }
 
+  stopRecording(url, trackId) {
+    let trackIndex;
+    let clonedTrack = this.props.tracks.filter((track, index) => {
+      if (trackId === track.id) {
+        trackIndex = index;
+        return track;
+      }
+    });
+    clonedTrack = Object.assign({src: url}, clonedTrack[0]);
+
+    this.props.actions.stopRecording(clonedTrack, trackIndex);
+  }
+
   recordTrack(e) {
     const eventTrackId = parseInt(e.target.getAttribute('data-track-id'), 10);
 
@@ -79,8 +93,7 @@ class MainPage extends React.Component {
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){
             let blob = new Blob(audioChunks,{type:'audio/x-mpeg-3'});
-            console.log('recorder stopped')
-            this.props.actions.stopRecording(URL.createObjectURL(blob), eventTrackId);
+            this.stopRecording(URL.createObjectURL(blob), eventTrackId);
           }
         }
         this.recorder.start();

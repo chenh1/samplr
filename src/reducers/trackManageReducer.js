@@ -5,17 +5,17 @@ export default function trackManageReducer(state = initialState.tracks, action) 
 
     switch (action.type) {
         case 'ADD_TRACK':
-            newState = [...newState, {
-                id: state.length,
-                divisions: 4 //@todo CHANGE 4 TO BPM WHEN LOGIC IS IMPLEMENTED
-            }]; 
+            newState = [...newState, state[0]]; 
             return newState;
         case 'TRACKS_LOADED':
             newState = [...newState, ...action.tracks];
             return newState;
         case 'STOP_RECORDING':
-            console.log(action.trackId)
-            newState[parseInt(action.trackId, 10)].src = action.audioSrc;
+            newState = [
+                ...newState.slice(0, action.trackIndex), 
+                ...newState.slice(action.trackIndex + 1), 
+                action.clonedTrack];
+
             return newState;
         default:
             return state;

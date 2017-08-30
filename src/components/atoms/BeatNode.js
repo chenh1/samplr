@@ -1,9 +1,12 @@
 import React from 'react';
+import '../../styles/beatNode.scss';
 
-const BeatNode = ({}) => {
+const BeatNode = ({isLive}) => {
+    const liveClass = isLive ? ' live' : '';
+
     return (
-        <div className="">
-            <button>BeatNode</button>
+        <div>
+            <button className={"beat-node" + liveClass}>BeatNode</button>
         </div>
     );
 };

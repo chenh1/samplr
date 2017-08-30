@@ -1,0 +1,9 @@
+.head-rail {
+    background: blue;
+    display: flex;
+
+    .node-grid {
+        display: flex;
+        justify-content: space-between;
+    }
+}

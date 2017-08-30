@@ -7,7 +7,6 @@ import * as actions from '../../actions/effectsRigActions';
 import {getTrack} from '../../reducers';
 
 const EffectsRig = (props) => {
-    console.log(props);
     return (
         <div>
             <p>Track No: {props.track.id}</p>

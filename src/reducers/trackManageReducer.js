@@ -12,9 +12,10 @@ export default function trackManageReducer(state = initialState.tracks, action) 
             return newState;
         case 'STOP_RECORDING':
             newState = [
-                ...newState.slice(0, action.trackIndex), 
-                ...newState.slice(action.trackIndex + 1), 
-                action.clonedTrack];
+                ...newState.slice(0, action.trackIndex),
+                action.clonedTrack, 
+                ...newState.slice(action.trackIndex + 1),
+            ];
 
             return newState;
         default:

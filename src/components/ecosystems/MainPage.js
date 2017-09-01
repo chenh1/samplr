@@ -16,6 +16,7 @@ class MainPage extends React.Component {
     super(props, context);
 
     this.playProject = this.playProject.bind(this);
+    this.playProjectLive = this.playProjectLive.bind(this);
     this.stopProject = this.stopProject.bind(this);
     this.recordTrack = this.recordTrack.bind(this);
     this.playAllTracks = this.playAllTracks.bind(this);
@@ -35,6 +36,10 @@ class MainPage extends React.Component {
         track.play();
       }
     })
+  }
+
+  playProjectLive() {
+
   }
 
   playProject() {
@@ -107,7 +112,7 @@ class MainPage extends React.Component {
   render() {
     return (
       <div>
-        <MainControls playProject={this.playProject} stopProject={this.stopProject}/>
+        <MainControls playProjectLive={this.playProjectLive} playProject={this.playProject} stopProject={this.stopProject}/>
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
         <HeadRail />
 

@@ -80,7 +80,7 @@ class MainPage extends React.Component {
         return track;
       }
     });
-    clonedTrack = Object.assign({src: url}, clonedTrack[0]);
+    clonedTrack = Object.assign({}, clonedTrack[0], {src: url});
     this.props.actions.stopRecording(clonedTrack, trackIndex);
   }
 

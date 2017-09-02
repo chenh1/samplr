@@ -11,6 +11,7 @@ export default function trackManageReducer(state = initialState.tracks, action) 
             newState = [...newState, ...action.tracks];
             return newState;
         case 'STOP_RECORDING':
+        console.log(action.clonedTrack);
             newState = [
                 ...newState.slice(0, action.trackIndex),
                 action.clonedTrack, 

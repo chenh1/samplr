@@ -45,20 +45,22 @@ class MainPage extends React.Component {
   playProject() {
     const beatInterval = (60 / this.props.session.tempo) * 1000;
 
-    this.props.actions.playProject();
-    this.playAllTracks();
-    
-    this.setLooper = setInterval(() => {
-      if (this.props.session.liveNode < 3) {
-        this.props.actions.incrementLiveNode();
-      } else {
-        this.props.actions.loopLiveNode();
-        if (this.recorder && this.recorder.state !== "inactive") {
-          this.recorder.stop();
+    if (!this.props.session.play) {
+      this.props.actions.playProject();
+      this.playAllTracks();
+      
+      this.setLooper = setInterval(() => {
+        if (this.props.session.liveNode < 3) {
+          this.props.actions.incrementLiveNode();
+        } else {
+          this.props.actions.loopLiveNode();
+          if (this.recorder && this.recorder.state !== "inactive") {
+            this.recorder.stop();
+          }
+          this.playAllTracks();
         }
-        this.playAllTracks();
-      }
-    }, beatInterval);
+      }, beatInterval);
+    }
   }
 
   stopProject() {
@@ -97,6 +99,7 @@ class MainPage extends React.Component {
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){
             let blob = new Blob(audioChunks,{type:'audio/x-mpeg-3'});
+            debugger;
             this.stopRecording(URL.createObjectURL(blob), eventTrackId);
           }
         }

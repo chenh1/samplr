@@ -3,14 +3,28 @@ export const stopProject = () => ({ type: 'STOP_PROJECT' });
 export const incrementLiveNode = () => ({ type: 'INCREMENT_LIVE_NODE' });
 export const loopLiveNode = () => ({ type: 'LOOP_LIVE_NODE' });
 export const recordStart = () => ({ type: 'RECORD_START' });
+export const greeting = (firstName) => ({ type: 'GREETING', firstName });
+export const asyncGreetings = () => (
+    dispatch => {
+        fetch('https://desolate-peak-60507.herokuapp.com/graphql?query={firstname}').then(data => {
+            console.log('retrieve ', data);
+            return data.json();
+        }).then(jsonData => {
+            console.log(jsonData.data.firstname);
+            dispatch(greeting(jsonData.data.firstname));
+        }).catch(error => {
+            throw(error);
+        });
+    }
+);
+
 export const playProjectLive = () => (
     dispatch => {
-        //fetch('').then(data => {
-        //  ensure all users return the request to play live
-        //  dispatch(playProject());
-        //});
-        setTimeout(() => {
+        fetch('https://desolate-peak-60507.herokuapp.com/graphql?query=mutation{startPlay}', {method:"POST"}).then(data => {
+            return data.json();
+        }).then(jsonData => {
+            console.log(jsonData);
             dispatch(playProject());
-        }, 1500);
+        });
     }
-)
+);

@@ -1,5 +1,6 @@
 export default {
   session: {
+    firstName: '',
     play: false,
     recording: false,
     tempo: 120,

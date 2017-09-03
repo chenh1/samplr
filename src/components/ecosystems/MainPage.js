@@ -27,7 +27,8 @@ class MainPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadTracks();
+    //this.props.actions.loadTracks();
+    this.props.actions.asyncGreetings();
   }
 
   playAllTracks() {
@@ -39,7 +40,7 @@ class MainPage extends React.Component {
   }
 
   playProjectLive() {
-
+    this.props.actions.playProjectLive();
   }
 
   playProject() {
@@ -115,6 +116,9 @@ class MainPage extends React.Component {
   render() {
     return (
       <div>
+        <div>
+          Hello, {this.props.session.firstName}
+        </div>
         <MainControls playProjectLive={this.playProjectLive} playProject={this.playProject} stopProject={this.stopProject}/>
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
         <HeadRail />

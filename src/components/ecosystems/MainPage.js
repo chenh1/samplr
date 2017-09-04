@@ -6,10 +6,18 @@ import HeadRail from '../organisms/HeadRail';
 import EffectsRig from '../organisms/EffectsRig';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {compose, pure} from 'recompose';
+import {compose, mapProps, pure} from 'recompose';
+import gql from 'graphql-tag';
+import {graphql} from 'react-apollo';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
+
+const playState = gql`
+  query {
+    play
+  }
+`;
 
 class MainPage extends React.Component {
   constructor(props, context) {
@@ -164,5 +172,15 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  graphql(playState),
+  mapProps(({data, ...rest}) => {
+    const playState = (data && data.play);
+    const props = {...rest};
+    props.session = Object.assign({}, props.session, {play: playState});
+    console.log('play state: ', playState, {...rest});
+    return {
+      ...props
+    }
+  }),
   pure //once props grow, convert to onlyUpdateForKeys
 )(MainPage);

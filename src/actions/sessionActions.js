@@ -23,7 +23,6 @@ export const playProjectLive = () => (
         fetch('http://localhost:4000/graphql?query=mutation{startPlay}', {method:"POST"}).then(data => {
             return data.json();
         }).then(jsonData => {
-            console.log(jsonData);
             dispatch(playProject());
         });
     }
@@ -34,7 +33,6 @@ export const stopProjectLive = () => (
         fetch('http://localhost:4000/graphql?query=mutation{stopPlay}', {method:"POST"}).then(data => {
             return data.json();
         }).then(jsonData => {
-            console.log(jsonData);
             dispatch(stopProject());
         });
     }

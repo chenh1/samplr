@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, IndexLink } from 'react-router';
-import AppProvider from '../client/Provider';
 
 class App extends React.Component {
   render() {
@@ -11,9 +10,7 @@ class App extends React.Component {
         {' | '}
         <br/>
         <h1>samplr</h1>
-        <AppProvider>
-          {this.props.children}
-        </AppProvider>
+        {this.props.children}
       </div>
     );
   }

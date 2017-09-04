@@ -178,15 +178,15 @@ function mapDispatchToProps(dispatch) {
 const playStateChanged = gql`
   subscription {
     startPlayTriggered
-    stopTriggered
   }
 `;
 
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
   graphql(playState),
-  mapProps(({data, ...rest}) => {
+  mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
-  
+    console.log('passed state: ', {...props})
     return {
       subscribeToSessionState: () => {
         return subscribeToMore({
@@ -194,22 +194,13 @@ export default compose(
           onError: (e) => {
             return console.error('could not load!!! ', e)
           },
-          updateQuery: (prev, {subscriptionData}) => {
-            console.log('in update query')
-            if (!subscriptionData.data) {
-              return prev;
-            } 
-
-            const playState = (data && data.play);
-            const props = {...rest};
-            props.session = Object.assign({}, props.session, {play: playState});
-            console.log('play state: ', playState, {...rest});
-            return props;
+          updateQuery: () => {  
+            props.actions.playProject();
           }
         })
-      }
+      },
+      ...props
     }
   }),
-  connect(mapStateToProps, mapDispatchToProps),
   pure //once props grow, convert to onlyUpdateForKeys
 )(MainPage);

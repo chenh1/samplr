@@ -6,7 +6,7 @@ export const recordStart = () => ({ type: 'RECORD_START' });
 export const greeting = (firstName) => ({ type: 'GREETING', firstName });
 export const asyncGreetings = () => (
     dispatch => {
-        fetch('https://desolate-peak-60507.herokuapp.com/graphql?query={firstname}').then(data => {
+        fetch('http://localhost:4000/graphql?query={firstname}').then(data => {
             console.log('retrieve ', data);
             return data.json();
         }).then(jsonData => {
@@ -20,11 +20,22 @@ export const asyncGreetings = () => (
 
 export const playProjectLive = () => (
     dispatch => {
-        fetch('https://desolate-peak-60507.herokuapp.com/graphql?query=mutation{startPlay}', {method:"POST"}).then(data => {
+        fetch('http://localhost:4000/graphql?query=mutation{startPlay}', {method:"POST"}).then(data => {
             return data.json();
         }).then(jsonData => {
             console.log(jsonData);
             dispatch(playProject());
+        });
+    }
+);
+
+export const stopProjectLive = () => (
+    dispatch => {
+        fetch('http://localhost:4000/graphql?query=mutation{stopPlay}', {method:"POST"}).then(data => {
+            return data.json();
+        }).then(jsonData => {
+            console.log(jsonData);
+            dispatch(stopProject());
         });
     }
 );

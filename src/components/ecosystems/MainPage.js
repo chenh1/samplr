@@ -6,7 +6,7 @@ import HeadRail from '../organisms/HeadRail';
 import EffectsRig from '../organisms/EffectsRig';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {compose, mapProps, pure} from 'recompose';
+import {compose, mapProps, withHandlers, pure} from 'recompose';
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
 import * as trackManageActions from '../../actions/trackManageActions';
@@ -32,6 +32,10 @@ class MainPage extends React.Component {
     this.stopRecording = this.stopRecording.bind(this);
     this.setLooper;
     this.recorder;
+  }
+
+  componentWillMount() {
+    this.props.subscribeToSessionState();
   }
 
   componentDidMount() {
@@ -74,7 +78,7 @@ class MainPage extends React.Component {
 
   stopProject() {
     clearInterval(this.setLooper);
-    this.props.actions.stopProject();
+    this.props.actions.stopProjectLive();
     
     if (this.recorder && this.recorder.state !== "inactive") {
       this.recorder.stop();
@@ -170,17 +174,42 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+//TODO: TEST CODE...REFACTOR LATER
+const playStateChanged = gql`
+  subscription {
+    startPlayTriggered
+    stopTriggered
+  }
+`;
+
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
   graphql(playState),
   mapProps(({data, ...rest}) => {
-    const playState = (data && data.play);
-    const props = {...rest};
-    props.session = Object.assign({}, props.session, {play: playState});
-    console.log('play state: ', playState, {...rest});
+    const subscribeToMore = data && data.subscribeToMore;
+  
     return {
-      ...props
+      subscribeToSessionState: () => {
+        return subscribeToMore({
+          document: playStateChanged,
+          onError: (e) => {
+            return console.error('could not load!!! ', e)
+          },
+          updateQuery: (prev, {subscriptionData}) => {
+            console.log('in update query')
+            if (!subscriptionData.data) {
+              return prev;
+            } 
+
+            const playState = (data && data.play);
+            const props = {...rest};
+            props.session = Object.assign({}, props.session, {play: playState});
+            console.log('play state: ', playState, {...rest});
+            return props;
+          }
+        })
+      }
     }
   }),
+  connect(mapStateToProps, mapDispatchToProps),
   pure //once props grow, convert to onlyUpdateForKeys
 )(MainPage);

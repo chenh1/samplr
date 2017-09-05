@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import apiPath from '../apiPath';
+import { apiPath } from '../apiPath';
 
 export const addTrack = () => ({ type: 'ADD_TRACK' });
 

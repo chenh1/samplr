@@ -1,3 +1,9 @@
-export default window.location.hostname === 'localhost' ?
+const apiPath = window.location.hostname === 'localhost' ?
     window.location.protocol + '//' + window.location.hostname + ':4000/' :
     window.location.protocol + '//desolate-peak-60507.herokuapp.com/';
+
+const subscriptionPath = window.location.hostname === 'localhost' ?
+    'ws://' + window.location.hostname + ':4000/' :
+    'ws://desolate-peak-60507.herokuapp.com/';
+
+export { apiPath, subscriptionPath };

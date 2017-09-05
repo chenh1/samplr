@@ -1,5 +1,5 @@
-import apiPath from '../apiPath';
-console.log('APTH PATH:', `${apiPath}graphql?query={firstname}`)
+import { apiPath } from '../apiPath';
+
 export const playProject = () => ({ type: 'PLAY_PROJECT' });
 export const stopProject = () => ({ type: 'STOP_PROJECT' });
 export const incrementLiveNode = () => ({ type: 'INCREMENT_LIVE_NODE' });

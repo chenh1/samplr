@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import apiPath from '../apiPath';
 
 export const addTrack = () => ({ type: 'ADD_TRACK' });
 
@@ -6,7 +7,7 @@ export const loadTracksSuccess = (tracks) => ({ type: 'TRACKS_LOADED', tracks })
 
 export const loadTracks = () => (
     dispatch => {
-        fetch('https://desolate-peak-60507.herokuapp.com/tracks').then(data => {
+        fetch(`${apiPath}tracks`).then(data => {
             return data.json();
         }).then(jsonData => {
             dispatch(loadTracksSuccess(jsonData));

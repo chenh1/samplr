@@ -1,3 +1,5 @@
+import apiPath from '../apiPath';
+console.log('APTH PATH:', `${apiPath}graphql?query={firstname}`)
 export const playProject = () => ({ type: 'PLAY_PROJECT' });
 export const stopProject = () => ({ type: 'STOP_PROJECT' });
 export const incrementLiveNode = () => ({ type: 'INCREMENT_LIVE_NODE' });
@@ -6,7 +8,7 @@ export const recordStart = () => ({ type: 'RECORD_START' });
 export const greeting = (firstName) => ({ type: 'GREETING', firstName });
 export const asyncGreetings = () => (
     dispatch => {
-        fetch('http://localhost:4000/graphql?query={firstname}').then(data => {
+        fetch(`${apiPath}graphql?query={firstname}`).then(data => {
             console.log('retrieve ', data);
             return data.json();
         }).then(jsonData => {
@@ -20,7 +22,7 @@ export const asyncGreetings = () => (
 
 export const playProjectLive = () => (
     dispatch => {
-        fetch('http://localhost:4000/graphql?query=mutation{startPlay}', {method:"POST"}).then(data => {
+        fetch(`${apiPath}graphql?query=mutation{startPlay}`, {method:"POST"}).then(data => {
             return data.json();
         }).then(jsonData => {
             dispatch(playProject());
@@ -30,7 +32,7 @@ export const playProjectLive = () => (
 
 export const stopProjectLive = () => (
     dispatch => {
-        fetch('http://localhost:4000/graphql?query=mutation{stopPlay}', {method:"POST"}).then(data => {
+        fetch(`${apiPath}graphql?query=mutation{stopPlay}`, {method:"POST"}).then(data => {
             return data.json();
         }).then(jsonData => {
             dispatch(stopProject());

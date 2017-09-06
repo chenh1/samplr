@@ -5,6 +5,7 @@ export const stopProject = () => ({ type: 'STOP_PROJECT' });
 export const incrementLiveNode = () => ({ type: 'INCREMENT_LIVE_NODE' });
 export const loopLiveNode = () => ({ type: 'LOOP_LIVE_NODE' });
 export const recordStart = () => ({ type: 'RECORD_START' });
+export const playProjectLiveDone = () => ({ type: 'PLAY_PROJECT_LIVE_DONE' });
 export const greeting = (firstName) => ({ type: 'GREETING', firstName });
 export const asyncGreetings = () => (
     dispatch => {

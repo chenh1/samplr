@@ -32,6 +32,10 @@ class MainPage extends React.Component {
   componentDidMount() {
     //this.props.actions.loadTracks();
     this.props.actions.asyncGreetings();
+
+    if (this.props.session.livePlay) {
+      this.playProject();
+    }
   }
 
   playAllTracks() {

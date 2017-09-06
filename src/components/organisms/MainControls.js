@@ -1,6 +1,5 @@
 import React from 'react';
-import TimeSignature from '../molecules/TimeSignature';
-import TempoControl from '../molecules/TempoControl';
+import { TimeSignature, TempoControl } from '../molecules';
 import Spinner from '../atoms/Spinner';
 
 const MainControls = ({playProjectLive, playProject, stopProject}) => {

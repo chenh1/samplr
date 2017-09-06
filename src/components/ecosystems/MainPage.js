@@ -1,23 +1,14 @@
 import React from 'react';
-import {Link} from 'react-router';
-import MainControls from '../organisms/MainControls';
-import Track from '../organisms/Track';
-import HeadRail from '../organisms/HeadRail';
-import EffectsRig from '../organisms/EffectsRig';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {compose, mapProps, withHandlers, pure} from 'recompose';
-import gql from 'graphql-tag';
-import {graphql} from 'react-apollo';
+import { Link } from 'react-router';
+import { MainControls, Track, HeadRail, EffectsRig } from '../organisms';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { compose, mapProps, withHandlers, pure } from 'recompose';
+import { playState, onPlayStateChanged } from '../../client/sessionSchemas';
+import { graphql } from 'react-apollo';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
-
-const playState = gql`
-  query {
-    play
-  }
-`;
 
 class MainPage extends React.Component {
   constructor(props, context) {
@@ -112,7 +103,6 @@ class MainPage extends React.Component {
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){
             let blob = new Blob(audioChunks,{type:'audio/x-mpeg-3'});
-            debugger;
             this.stopRecording(URL.createObjectURL(blob), eventTrackId);
           }
         }
@@ -174,25 +164,17 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-//TODO: TEST CODE...REFACTOR LATER
-const playStateChanged = gql`
-  subscription {
-    startPlayTriggered
-  }
-`;
-
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   graphql(playState),
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
-    console.log('passed state: ', {...props})
     return {
       subscribeToSessionState: () => {
         return subscribeToMore({
-          document: playStateChanged,
+          document: onPlayStateChanged,
           onError: (e) => {
-            return console.error('could not load!!! ', e)
+            return console.error('Error: ', e)
           },
           updateQuery: () => {  
             props.actions.playProject();

@@ -8,7 +8,11 @@ export default function trackManageReducer(state = initialState.session, action)
             newState.play = true;
             newState.liveNode = 0;
             return newState;
+        case 'PLAY_PROJECT_LIVE_DONE':
+            newState.livePlay = true;
+            return newState;
         case 'STOP_PROJECT':
+            newState.livePlay = false;
             newState.play = false;
             newState.liveNode = -1;
             return newState;
@@ -20,6 +24,9 @@ export default function trackManageReducer(state = initialState.session, action)
             return newState;
         case 'RECORD_START':
             newState.recording = true;
+            return newState;
+        case 'GREETING':
+            newState.firstName = action.firstName;
             return newState;
         default:
             return state;

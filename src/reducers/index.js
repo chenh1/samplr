@@ -4,11 +4,15 @@ import {createSelector} from 'reselect';
 import tracks from './trackManageReducer';
 import visibleEffect from './effectsRigReducer';
 import session from './sessionReducer';
+import { ApolloClient, ApolloProvider } from 'react-apollo';
+
+export const client = new ApolloClient();
 
 const rootReducer = combineReducers({
     visibleEffect,
     tracks,
     session,
+    apollo: client.reducer(),
     routing: routerReducer
 });
 

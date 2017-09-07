@@ -1,12 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router';
-import MainControls from '../organisms/MainControls';
-import Track from '../organisms/Track';
-import HeadRail from '../organisms/HeadRail';
-import EffectsRig from '../organisms/EffectsRig';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {compose, pure} from 'recompose';
+import { Link } from 'react-router';
+import { MainControls, Track, HeadRail, EffectsRig } from '../organisms';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { compose, mapProps, withHandlers, pure } from 'recompose';
+import { playState, onPlayStateChanged } from '../../client/sessionSchemas';
+import { graphql } from 'react-apollo';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
@@ -25,8 +24,24 @@ class MainPage extends React.Component {
     this.recorder;
   }
 
+  componentWillMount() {
+    console.log('in willmount')
+    this.props.subscribeToSessionState();
+  }
+
   componentDidMount() {
-    this.props.actions.loadTracks();
+    //this.props.actions.loadTracks();
+    this.props.actions.asyncGreetings();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.session.livePlay !== this.props.session.livePlay) {
+      if (nextProps.session.livePlay) {
+        this.playProject();
+      } else {
+        this.stopProject();
+      }
+    } 
   }
 
   playAllTracks() {
@@ -40,25 +55,27 @@ class MainPage extends React.Component {
   playProject() {
     const beatInterval = (60 / this.props.session.tempo) * 1000;
 
-    this.props.actions.playProject();
-    this.playAllTracks();
-    
-    this.setLooper = setInterval(() => {
-      if (this.props.session.liveNode < 3) {
-        this.props.actions.incrementLiveNode();
-      } else {
-        this.props.actions.loopLiveNode();
-        if (this.recorder && this.recorder.state !== "inactive") {
-          this.recorder.stop();
+    if (!this.props.session.play) {
+      this.props.actions.playProject();
+      this.playAllTracks();
+      
+      this.setLooper = setInterval(() => {
+        if (this.props.session.liveNode < 3) {
+          this.props.actions.incrementLiveNode();
+        } else {
+          this.props.actions.loopLiveNode();
+          if (this.recorder && this.recorder.state !== "inactive") {
+            this.recorder.stop();
+          }
+          this.playAllTracks();
         }
-        this.playAllTracks();
-      }
-    }, beatInterval);
+      }, beatInterval);
+    }
   }
 
   stopProject() {
     clearInterval(this.setLooper);
-    this.props.actions.stopProject();
+    this.props.actions.stopProjectLive();
     
     if (this.recorder && this.recorder.state !== "inactive") {
       this.recorder.stop();
@@ -73,7 +90,7 @@ class MainPage extends React.Component {
         return track;
       }
     });
-    clonedTrack = Object.assign({src: url}, clonedTrack[0]);
+    clonedTrack = Object.assign({}, clonedTrack[0], {src: url});
     this.props.actions.stopRecording(clonedTrack, trackIndex);
   }
 
@@ -105,9 +122,13 @@ class MainPage extends React.Component {
   }
 
   render() {
+    console.log('live node: ', this.props.session.liveNode)
     return (
       <div>
-        <MainControls playProject={this.playProject} stopProject={this.stopProject}/>
+        <div>
+          Hello, {this.props.session.firstName}
+        </div>
+        <MainControls playProjectLive={this.props.actions.playProjectLive} playProject={this.playProject} stopProject={this.stopProject}/>
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
         <HeadRail />
 
@@ -132,7 +153,7 @@ class MainPage extends React.Component {
 };
 
 function mapStateToProps(state) {
-  console.log(state);
+  console.log(state.session.liveNode);
   return {
     session: state.session,
     tracks: state.tracks
@@ -152,5 +173,24 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  graphql(playState),
+  mapProps(({data, ...props}) => {
+    const subscribeToMore = data && data.subscribeToMore;
+    return {
+      subscribeToSessionState: () => {
+        return subscribeToMore({
+          document: onPlayStateChanged,
+          onError: (e) => {
+            return console.error('Error: ', e)
+          },
+          updateQuery: () => {  
+            console.log('triggered play')
+            props.actions.playProject();
+          }
+        })
+      },
+      ...props
+    }
+  }),
   pure //once props grow, convert to onlyUpdateForKeys
 )(MainPage);

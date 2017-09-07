@@ -1,12 +1,12 @@
 import React from 'react';
-import TimeSignature from '../molecules/TimeSignature';
-import TempoControl from '../molecules/TempoControl';
+import { TimeSignature, TempoControl } from '../molecules';
 import Spinner from '../atoms/Spinner';
 
-const MainControls = ({playProject, stopProject}) => {
+const MainControls = ({playProjectLive, playProject, stopProject}) => {
     return (
         <div>
-            <button onClick={playProject}>Play</button>
+            <button onClick={playProjectLive}>Play Live</button>
+            <button onClick={playProject}>Private Play</button>
             <button onClick={stopProject}>Stop</button>
             <TimeSignature min="1" max="20" />
             <TempoControl min="1" max="300" value="120" />

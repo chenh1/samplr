@@ -1,6 +1,5 @@
 import React from 'react';
-import TrackControl from '../molecules/TrackControl';
-import BeatGrid from '../molecules/BeatGrid';
+import { TrackControl, BeatGrid } from '../molecules';
 import '../../styles/track.scss';
 
 const Track = ({min, max, trackId, setTrackEffects, liveNode, recordStart, audioSrc, playing, uploadAudio}) => {

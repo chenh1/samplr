@@ -1,5 +1,5 @@
 import React from 'react';
-import BeatNode from '../atoms/BeatNode';
+import { BeatNode } from '../atoms';
 import '../../styles/beatGrid.scss';
 import '../../styles/styles.scss';
 

@@ -122,12 +122,8 @@ class MainPage extends React.Component {
   }
 
   render() {
-    console.log('live node: ', this.props.session.liveNode)
     return (
       <div>
-        <div>
-          Hello, {this.props.session.firstName}
-        </div>
         <MainControls playProjectLive={this.props.actions.playProjectLive} playProject={this.playProject} stopProject={this.stopProject}/>
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
         <HeadRail />

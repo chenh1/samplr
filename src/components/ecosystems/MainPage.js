@@ -25,13 +25,12 @@ class MainPage extends React.Component {
   }
 
   componentWillMount() {
-    console.log('in willmount')
-    this.props.subscribeToSessionState();
+    this.props.subscribeToSessionState(this.playProject);
   }
 
   componentDidMount() {
     //this.props.actions.loadTracks();
-    this.props.actions.asyncGreetings();
+    //this.props.actions.asyncGreetings();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -173,15 +172,14 @@ export default compose(
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
     return {
-      subscribeToSessionState: () => {
+      subscribeToSessionState: (callback) => {
         return subscribeToMore({
           document: onPlayStateChanged,
           onError: (e) => {
             return console.error('Error: ', e)
           },
           updateQuery: () => {  
-            console.log('triggered play')
-            props.actions.playProject();
+            callback();
           }
         })
       },

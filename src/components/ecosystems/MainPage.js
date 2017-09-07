@@ -26,16 +26,27 @@ class MainPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.subscribeToSessionState();
+    console.log('in willmount')
+    this.props.subscribeToSessionState(this.playProject, this.props.session.livePlay);
   }
 
   componentDidMount() {
     //this.props.actions.loadTracks();
     this.props.actions.asyncGreetings();
+  }
 
-    if (this.props.session.livePlay) {
+  shouldComponentUpdate(nextProps) {
+    console.log('in should update, ', nextProps);
+
+    if (nextProps.session.livePlay) {
       this.playProject();
     }
+
+    if (nextProps.session.livePlay !== this.props.session.livePlay) {
+      return true;
+    }
+
+    return false;
   }
 
   playAllTracks() {
@@ -120,6 +131,7 @@ class MainPage extends React.Component {
   }
 
   render() {
+    console.log(this.props.session)
     return (
       <div>
         <div>
@@ -174,7 +186,7 @@ export default compose(
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
     return {
-      subscribeToSessionState: () => {
+      subscribeToSessionState: (callback, bool) => {
         return subscribeToMore({
           document: onPlayStateChanged,
           onError: (e) => {

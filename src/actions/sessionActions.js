@@ -26,7 +26,7 @@ export const playProjectLive = () => (
         fetch(`${apiPath}graphql?query=mutation{startPlay}`, {method:"POST"}).then(data => {
             return data.json();
         }).then(jsonData => {
-            dispatch(playProject());
+            dispatch(playProjectLiveDone());
         });
     }
 );

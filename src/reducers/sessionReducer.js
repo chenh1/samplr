@@ -12,6 +12,7 @@ export default function trackManageReducer(state = initialState.session, action)
             newState.livePlay = true;
             return newState;
         case 'STOP_PROJECT':
+            newState.livePlay = false;
             newState.play = false;
             newState.liveNode = -1;
             return newState;

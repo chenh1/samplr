@@ -15,7 +15,6 @@ class MainPage extends React.Component {
     super(props, context);
 
     this.playProject = this.playProject.bind(this);
-    this.playProjectLive = this.playProjectLive.bind(this);
     this.stopProject = this.stopProject.bind(this);
     this.recordTrack = this.recordTrack.bind(this);
     this.playAllTracks = this.playAllTracks.bind(this);
@@ -27,7 +26,7 @@ class MainPage extends React.Component {
 
   componentWillMount() {
     console.log('in willmount')
-    this.props.subscribeToSessionState(this.playProject, this.props.session.livePlay);
+    this.props.subscribeToSessionState();
   }
 
   componentDidMount() {
@@ -35,18 +34,14 @@ class MainPage extends React.Component {
     this.props.actions.asyncGreetings();
   }
 
-  shouldComponentUpdate(nextProps) {
-    console.log('in should update, ', nextProps);
-
-    if (nextProps.session.livePlay) {
-      this.playProject();
-    }
-
+  componentWillReceiveProps(nextProps) {
     if (nextProps.session.livePlay !== this.props.session.livePlay) {
-      return true;
-    }
-
-    return false;
+      if (nextProps.session.livePlay) {
+        this.playProject();
+      } else {
+        this.stopProject();
+      }
+    } 
   }
 
   playAllTracks() {
@@ -55,10 +50,6 @@ class MainPage extends React.Component {
         track.play();
       }
     })
-  }
-
-  playProjectLive() {
-    this.props.actions.playProjectLive();
   }
 
   playProject() {
@@ -131,13 +122,13 @@ class MainPage extends React.Component {
   }
 
   render() {
-    console.log(this.props.session)
+    console.log('live node: ', this.props.session.liveNode)
     return (
       <div>
         <div>
           Hello, {this.props.session.firstName}
         </div>
-        <MainControls playProjectLive={this.playProjectLive} playProject={this.playProject} stopProject={this.stopProject}/>
+        <MainControls playProjectLive={this.props.actions.playProjectLive} playProject={this.playProject} stopProject={this.stopProject}/>
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
         <HeadRail />
 
@@ -162,7 +153,7 @@ class MainPage extends React.Component {
 };
 
 function mapStateToProps(state) {
-  console.log(state);
+  console.log(state.session.liveNode);
   return {
     session: state.session,
     tracks: state.tracks
@@ -186,13 +177,14 @@ export default compose(
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
     return {
-      subscribeToSessionState: (callback, bool) => {
+      subscribeToSessionState: () => {
         return subscribeToMore({
           document: onPlayStateChanged,
           onError: (e) => {
             return console.error('Error: ', e)
           },
           updateQuery: () => {  
+            console.log('triggered play')
             props.actions.playProject();
           }
         })

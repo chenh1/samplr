@@ -23,6 +23,7 @@ export const asyncGreetings = () => (
 
 export const playProjectLive = () => (
     dispatch => {
+        console.log(`${apiPath}graphql?query=mutation{startPlay}`)
         fetch(`${apiPath}graphql?query=mutation{startPlay}`, {method:"POST"}).then(data => {
             return data.json();
         }).then(jsonData => {

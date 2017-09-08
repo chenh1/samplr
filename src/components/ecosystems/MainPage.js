@@ -4,7 +4,7 @@ import { MainControls, Track, HeadRail, EffectsRig } from '../organisms';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { compose, mapProps, withHandlers, pure } from 'recompose';
-import { playState, onPlayStateChanged } from '../../client/sessionSchemas';
+import { playState, onPlayActive } from '../../client/sessionSchemas';
 import { graphql } from 'react-apollo';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
@@ -148,7 +148,6 @@ class MainPage extends React.Component {
 };
 
 function mapStateToProps(state) {
-  console.log(state.session.liveNode);
   return {
     session: state.session,
     tracks: state.tracks
@@ -174,7 +173,7 @@ export default compose(
     return {
       subscribeToSessionState: (callback) => {
         return subscribeToMore({
-          document: onPlayStateChanged,
+          document: onPlayActive,
           onError: (e) => {
             return console.error('Error: ', e)
           },

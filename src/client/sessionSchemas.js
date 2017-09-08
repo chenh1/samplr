@@ -6,10 +6,22 @@ const playState = gql`
   }
 `;
 
-const onPlayStateChanged = gql`
+const onPlayActive = gql`
   subscription {
     startPlayTriggered
   }
 `;
 
-export { playState, onPlayStateChanged };
+const onStopActive = gql`
+  subscription {
+    stopTriggered
+  }
+`
+
+const onFileUploaded = gql`
+  subscription {
+    audioFileUploaded
+  }
+`
+
+export { playState, onPlayActive, onStopActive, onFileUploaded };

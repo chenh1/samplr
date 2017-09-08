@@ -171,7 +171,7 @@ export default compose(
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
     return {
-      subscribeToSessionState: (callback) => {
+      subscribeToSessionState: (callback) => { //TODO: MOVE THESE TO SERVICES
         return subscribeToMore({
           document: onPlayActive,
           onError: (e) => {

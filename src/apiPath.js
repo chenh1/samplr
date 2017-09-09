@@ -4,7 +4,7 @@ const apiPath = window.location.hostname === 'localhost' ?
 
 const subscriptionPath = window.location.hostname === 'localhost' ?
     'ws://' + window.location.hostname + ':4000/' :
-    'ws://desolate-peak-60507.herokuapp.com/';
+    'wss://desolate-peak-60507.herokuapp.com/';
 
 //const apiPath = window.location.protocol + '//desolate-peak-60507.herokuapp.com/';
 //const subscriptionPath = 'ws://desolate-peak-60507.herokuapp.com/';

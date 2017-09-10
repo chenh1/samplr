@@ -5,7 +5,8 @@ export default {
     play: false,
     recording: false,
     tempo: 120,
-    liveNode: -1 //not live
+    liveNode: -1, //not live
+    testSrc: ''
   },
   visibleEffect: {
     id: 0,

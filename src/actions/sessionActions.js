@@ -24,7 +24,9 @@ export const asyncGreetings = () => (
 export const playProjectLive = () => (
     dispatch => {
         console.log(`${apiPath}graphql?query=mutation{startPlay}`)
-        fetch(`${apiPath}graphql?query=mutation{startPlay}`, {method:"POST"}).then(data => {
+        fetch(`${apiPath}graphql?query=mutation{startPlay}`, {
+            method:"POST"
+        }).then(data => {
             return data.json();
         }).then(jsonData => {
             dispatch(playProjectLiveDone());
@@ -32,12 +34,47 @@ export const playProjectLive = () => (
     }
 );
 
-export const stopProjectLive = () => (
-    dispatch => {
-        fetch(`${apiPath}graphql?query=mutation{stopPlay}`, {method:"POST"}).then(data => {
+export const stopProjectLive = () => {
+    let formData = new FormData();
+    formData.append('data', JSON.stringify({foo:'bar'}));
+
+    return (dispatch) => {
+        fetch(`${apiPath}graphql?query=mutation{stopPlay}`, {
+            method:"POST",
+            body: formData
+        }).then(data => {
             return data.json();
         }).then(jsonData => {
             dispatch(stopProject());
         });
     }
-);
+};
+
+export const uploadFile = (formData) => {
+    return dispatch => {
+        fetch(`${apiPath}graphql?query=mutation{uploadAudioFile{originalname,mimetype}}`, {
+            method:"POST", 
+            body: formData 
+        }).then(data => {
+            console.log(data);
+            dispatch(stopProject());
+            return data;
+        })
+    }
+}
+
+export const dummyAction = () => ({type: 'DUMMY'})
+export const downloadedAudio = (file) => {
+    return {type:'DOWNLOADED', file};
+}
+export const downloadAudio = () => {
+    return dispatch => {
+        fetch(`${apiPath}graphql?query={getfile}`).then(data => {
+            console.log(data.body);
+            data.json();
+        }).then(jsonData => {
+            console.log(jsonData);
+            dispatch(dummyAction());
+        })
+    }
+}

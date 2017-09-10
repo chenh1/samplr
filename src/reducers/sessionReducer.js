@@ -28,6 +28,9 @@ export default function trackManageReducer(state = initialState.session, action)
         case 'GREETING':
             newState.firstName = action.firstName;
             return newState;
+        case 'DOWNLOADED':
+            console.log(action.file);
+            return newState;
         default:
             return state;
     }

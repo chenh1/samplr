@@ -4,7 +4,7 @@ import { MainControls, Track, HeadRail, EffectsRig } from '../organisms';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { compose, mapProps, withHandlers, pure } from 'recompose';
-import { playState, onPlayActive } from '../../client/sessionSchemas';
+import { playState, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
 import { graphql } from 'react-apollo';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
@@ -20,6 +20,7 @@ class MainPage extends React.Component {
     this.playAllTracks = this.playAllTracks.bind(this);
     this.uploadAudio = this.uploadAudio.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
+    this.uploadFileToFetch = this.uploadFileToFetch.bind(this);
     this.setLooper;
     this.recorder;
   }
@@ -93,6 +94,13 @@ class MainPage extends React.Component {
     this.props.actions.stopRecording(clonedTrack, trackIndex);
   }
 
+  uploadFileToFetch(file, trackId) {
+    let formData = new FormData();
+    console.log(file);
+    formData.append('attachment', file);
+    this.props.actions.uploadFile(formData)
+  }
+
   recordTrack(e) {
     const eventTrackId = parseInt(e.target.getAttribute('data-track-id'), 10);
 
@@ -108,7 +116,8 @@ class MainPage extends React.Component {
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){
             let blob = new Blob(audioChunks,{type:'audio/x-mpeg-3'});
-            this.stopRecording(URL.createObjectURL(blob), eventTrackId);
+            this.uploadFileToFetch(blob, eventTrackId);
+            //this.stopRecording(URL.createObjectURL(blob), eventTrackId);
           }
         }
         this.recorder.start();
@@ -140,7 +149,10 @@ class MainPage extends React.Component {
               playing={this.props.session.play} />
           );
         })}
-        
+
+        <button onClick={this.props.actions.downloadAudio}>TEST DOWNLOAD TRACK</button>
+        <audio src={this.props.session.testSrc}></audio>
+
         <button onClick={this.props.actions.addTrack}>Add</button>
       </div>
     );

@@ -69,11 +69,13 @@ export const downloadedAudio = (file) => {
 }
 export const downloadAudio = () => {
     return dispatch => {
-        fetch(`${apiPath}graphql?query={getfile}`).then(data => {
-            console.log(data.body);
-            data.json();
-        }).then(jsonData => {
-            console.log(jsonData);
+        fetch(`${apiPath}graphql?query={getfile{clip,id}}`).then(data => {
+            console.log(data);
+            return data.json();
+        }).then(res=> {
+            console.log(res);
+            let blob = new Blob(res.data.getfile.clip, {type:'qudio/x-mpeg-3'});
+            console.log(blob);
             dispatch(dummyAction());
         })
     }

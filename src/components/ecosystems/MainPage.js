@@ -115,7 +115,9 @@ class MainPage extends React.Component {
         this.recorder.ondataavailable = e => {
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){
+            console.log('audiochunks: ', audioChunks);
             let blob = new Blob(audioChunks,{type:'audio/x-mpeg-3'});
+            console.log('blob that was made: ', blob);
             this.uploadFileToFetch(blob, eventTrackId);
             //this.stopRecording(URL.createObjectURL(blob), eventTrackId);
           }

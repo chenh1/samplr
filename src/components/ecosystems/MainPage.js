@@ -210,6 +210,7 @@ export default compose(
             return console.error('Error: ', e)
           },
           updateQuery: (previousResult, {fetchMoreResult}) => {
+            console.log('fetch more? ', previousResult, fetchMoreResult)
             callback(fetchMoreResult);
           }
         })

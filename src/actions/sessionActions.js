@@ -64,8 +64,8 @@ export const uploadFile = (formData) => {
 }
 
 export const dummyAction = () => ({type: 'DUMMY'})
-export const downloadedAudio = (file) => {
-    return {type:'DOWNLOADED', file};
+export const downloadedAudio = (src) => {
+    return {type:'DOWNLOADED', src};
 }
 export const downloadAudio = () => {
     return dispatch => {
@@ -74,9 +74,19 @@ export const downloadAudio = () => {
             return data.json();
         }).then(res=> {
             console.log(res);
-            let blob = new Blob(res.data.getfile.clip, {type:'qudio/x-mpeg-3'});
+            let byteCharacters = atob(res.data.getfile.clip);
+
+            let byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+
+            let byteArray = new Uint8Array(byteNumbers);
+
+            let blob = new Blob(byteArray, {type:'audio/x-mpeg-3'});
+            let url = URL.createObjectURL(blob);
             console.log(blob);
-            dispatch(dummyAction());
+            dispatch(downloadedAudio(url));
         })
     }
 }

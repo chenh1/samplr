@@ -20,6 +20,7 @@ class MainPage extends React.Component {
     this.playAllTracks = this.playAllTracks.bind(this);
     this.uploadAudio = this.uploadAudio.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
+    this.produceBlob = this.produceBlob.bind(this);
     this.uploadFileToFetch = this.uploadFileToFetch.bind(this);
     this.setLooper;
     this.recorder;
@@ -27,6 +28,7 @@ class MainPage extends React.Component {
 
   componentWillMount() {
     this.props.subscribeToSessionState(this.playProject);
+    this.props.subscribeToAudioStream(this.produceBlob)
   }
 
   componentDidMount() {
@@ -96,9 +98,13 @@ class MainPage extends React.Component {
 
   uploadFileToFetch(file, trackId) {
     let formData = new FormData();
-    console.log(file);
     formData.append('attachment', file);
+    console.log(formData);
     this.props.actions.uploadFile(formData)
+  }
+
+  produceBlob(data) {
+    console.log(data);
   }
 
   recordTrack(e) {
@@ -113,13 +119,14 @@ class MainPage extends React.Component {
       .then(stream => {
         this.recorder = new MediaRecorder(stream);
         this.recorder.ondataavailable = e => {
+          console.log(e.data);
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){
             console.log('audiochunks: ', audioChunks);
             let blob = new Blob(audioChunks,{type:'audio/x-mpeg-3'});
             console.log('blob that was made: ', blob);
             this.uploadFileToFetch(blob, eventTrackId);
-            //this.stopRecording(URL.createObjectURL(blob), eventTrackId);
+            this.stopRecording(URL.createObjectURL(blob), eventTrackId);
           }
         }
         this.recorder.start();
@@ -193,6 +200,17 @@ export default compose(
           },
           updateQuery: () => {  
             callback();
+          }
+        })
+      },
+      subscribeToAudioStream: (callback) => {
+        return subscribeToMore({
+          document: onFileUploaded,
+          onError: (e) => {
+            return console.error('Error: ', e)
+          },
+          updateQuery: (previousResult, {fetchMoreResult}) => {
+            callback(fetchMoreResult);
           }
         })
       },

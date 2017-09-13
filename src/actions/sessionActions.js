@@ -92,16 +92,7 @@ export const downloadAudio = () => {
             }
 
             const blob = new Blob(byteArrays, {type: 'audio/x-mpeg-3'});
-            
-            /*let byteNumbers = new Array(byteCharacters.length);
-            console.log(byteNumbers)
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
 
-            let byteArray = new Uint8Array(byteNumbers);
-            console.log(byteArray);
-            let blob = new Blob(byteArray, {type:'audio/x-mpeg-3'});*/
             let url = URL.createObjectURL(blob);
             console.log(blob);
             dispatch(downloadedAudio(url));

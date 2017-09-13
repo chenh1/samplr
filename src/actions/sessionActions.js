@@ -75,15 +75,33 @@ export const downloadAudio = () => {
         }).then(res=> {
             console.log(res);
             let byteCharacters = atob(res.data.getfile.clip);
+            let byteArrays = [];
+            let sliceSize = 512;
 
-            let byteNumbers = new Array(byteCharacters.length);
+            for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                const slice = byteCharacters.slice(offset, offset + sliceSize);
+                
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+                }
+                
+                const byteArray = new Uint8Array(byteNumbers);
+                
+                byteArrays.push(byteArray);
+            }
+
+            const blob = new Blob(byteArrays, {type: 'audio/x-mpeg-3'});
+            
+            /*let byteNumbers = new Array(byteCharacters.length);
+            console.log(byteNumbers)
             for (let i = 0; i < byteCharacters.length; i++) {
                 byteNumbers[i] = byteCharacters.charCodeAt(i);
             }
 
             let byteArray = new Uint8Array(byteNumbers);
-
-            let blob = new Blob(byteArray, {type:'audio/x-mpeg-3'});
+            console.log(byteArray);
+            let blob = new Blob(byteArray, {type:'audio/x-mpeg-3'});*/
             let url = URL.createObjectURL(blob);
             console.log(blob);
             dispatch(downloadedAudio(url));

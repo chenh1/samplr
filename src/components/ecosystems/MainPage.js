@@ -77,11 +77,13 @@ class MainPage extends React.Component {
   }
 
   stopProject() {
-    clearInterval(this.setLooper);
-    this.props.actions.stopProjectLive();
-    
-    if (this.recorder && this.recorder.state !== "inactive") {
-      this.recorder.stop();
+    if (this.props.session.play) {
+      clearInterval(this.setLooper);
+      this.props.actions.stopProjectLive();
+      
+      if (this.recorder && this.recorder.state !== "inactive") {
+        this.recorder.stop();
+      }
     }
   }
 

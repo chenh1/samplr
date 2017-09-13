@@ -27,7 +27,7 @@ class MainPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.subscribeToSessionState(this.playProject);
+    this.props.subscribeToSessionPlay(this.playProject);
     this.props.subscribeToAudioStream(this.produceBlob)
   }
 
@@ -192,9 +192,20 @@ export default compose(
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
     return {
-      subscribeToSessionState: (callback) => { //TODO: MOVE THESE TO SERVICES
+      subscribeToSessionPlay: (callback) => { //TODO: MOVE THESE TO SERVICES
         return subscribeToMore({
           document: onPlayActive,
+          onError: (e) => {
+            return console.error('Error: ', e)
+          },
+          updateQuery: () => {  
+            callback();
+          }
+        })
+      },
+      subscribeToSessionStop: (callback) => {
+        return subscribeToMore({
+          document: onStopActive,
           onError: (e) => {
             return console.error('Error: ', e)
           },

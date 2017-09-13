@@ -63,7 +63,6 @@ export const uploadFile = (formData) => {
     }
 }
 
-export const dummyAction = () => ({type: 'DUMMY'})
 export const downloadedAudio = (src) => {
     return {type:'DOWNLOADED', src};
 }

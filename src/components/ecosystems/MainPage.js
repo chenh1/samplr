@@ -4,7 +4,7 @@ import { MainControls, Track, HeadRail, EffectsRig } from '../organisms';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { compose, mapProps, withHandlers, pure } from 'recompose';
-import { playState, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
+import { appState, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
 import { graphql } from 'react-apollo';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
@@ -191,7 +191,7 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  graphql(playState),
+  graphql(appState),
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
     return {

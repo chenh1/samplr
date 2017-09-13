@@ -66,6 +66,7 @@ export const uploadFile = (formData) => {
 export const downloadedAudio = (src) => {
     return {type:'DOWNLOADED', src};
 }
+
 export const downloadAudio = () => {
     return dispatch => {
         fetch(`${apiPath}graphql?query={getfile{clip,id}}`).then(data => {

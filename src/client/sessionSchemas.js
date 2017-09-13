@@ -1,8 +1,9 @@
 import gql from 'graphql-tag';
 
-const playState = gql`
+const appState = gql`
   query {
     play
+    getfile
   }
 `;
 
@@ -24,4 +25,4 @@ const onFileUploaded = gql`
   }
 `
 
-export { playState, onPlayActive, onStopActive, onFileUploaded };
+export { appState, onPlayActive, onStopActive, onFileUploaded };

@@ -28,7 +28,8 @@ class MainPage extends React.Component {
 
   componentWillMount() {
     this.props.subscribeToSessionPlay(this.playProject);
-    this.props.subscribeToAudioStream(this.produceBlob)
+    this.props.subscribeToSessionStop(this.stopProject);
+    this.props.subscribeToAudioStream(this.produceBlob);
   }
 
   componentDidMount() {

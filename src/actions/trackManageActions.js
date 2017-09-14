@@ -21,7 +21,7 @@ export const loadTracksSuccess = (tracks) => ({ type: 'TRACKS_LOADED', tracks })
 
 export const loadTracks = () => (
     dispatch => {
-        fetch(`${apiPath}tracks`).then(data => {
+        fetch(`${apiPath}graphql?query={getTracks{id,sessionid}}`).then(data => {
             return data.json();
         }).then(jsonData => {
             dispatch(loadTracksSuccess(jsonData));

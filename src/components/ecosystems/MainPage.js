@@ -223,6 +223,17 @@ export default compose(
           }
         })
       },
+      subscribeToAddTrack: (callback) => {
+        return subscribeToMore({
+          document: '',
+          onError: (e) => {
+            return console.error('Error: ', e)
+          },
+          updateQuery: () => {
+            callback();
+          }
+        })
+      },
       subscribeToAudioStream: (callback) => {
         return subscribeToMore({
           document: onFileUploaded,

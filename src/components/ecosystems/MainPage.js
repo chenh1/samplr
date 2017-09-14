@@ -22,6 +22,7 @@ class MainPage extends React.Component {
     this.stopRecording = this.stopRecording.bind(this);
     this.produceBlob = this.produceBlob.bind(this);
     this.uploadFileToFetch = this.uploadFileToFetch.bind(this);
+    this.addTrack = this.addTrack.bind(this);
     this.setLooper;
     this.recorder;
   }
@@ -45,6 +46,11 @@ class MainPage extends React.Component {
         this.stopProject();
       }
     } 
+  }
+
+  addTrack() {
+    let sessionId = this.props.session.id
+    this.props.actions.addTrack(sessionId);
   }
 
   playAllTracks() {
@@ -165,7 +171,7 @@ class MainPage extends React.Component {
         <button onClick={this.props.actions.downloadAudio}>TEST DOWNLOAD TRACK</button>
         <audio src={this.props.session.testSrc}></audio>
 
-        <button onClick={this.props.actions.addTrack}>Add</button>
+        <button onClick={this.addTrack}>Add</button>
       </div>
     );
   }

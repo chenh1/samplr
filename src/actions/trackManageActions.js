@@ -1,7 +1,13 @@
 import 'whatwg-fetch';
 import { apiPath } from '../apiPath';
 
-export const addTrack = () => ({ type: 'ADD_TRACK' });
+export const addTrackSuccess = () => ({});
+
+export const addTrack = (sessionId) => (
+    dispatch => {
+        fetch(`${apiPath}graphql?query=mutation{createTrack}`)
+    }
+);
 
 export const loadTracksSuccess = (tracks) => ({ type: 'TRACKS_LOADED', tracks });
 

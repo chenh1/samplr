@@ -4,7 +4,7 @@ export default function trackManageReducer(state = initialState.tracks, action) 
     let newState = [...state];
 
     switch (action.type) {
-        case 'ADD_TRACK':
+        case 'ADD_TRACK_SUCCESS':
             newState = [...newState, state[0]]; 
             return newState;
         case 'TRACKS_LOADED':

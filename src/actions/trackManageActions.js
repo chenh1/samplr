@@ -1,11 +1,19 @@
 import 'whatwg-fetch';
 import { apiPath } from '../apiPath';
 
-export const addTrackSuccess = () => ({});
+export const addTrackSuccess = () => ({ type: 'ADD_TRACK_SUCCESS' });
 
 export const addTrack = (sessionId) => (
     dispatch => {
-        fetch(`${apiPath}graphql?query=mutation{createTrack}`)
+        fetch(`${apiPath}graphql?query=mutation{createTrack(sessionid:${sessionId}){id}}`, {
+            method:"POST"
+        }).then(data => {
+            return data.json();
+        }).then(jsonData => {
+            dispatch(addTrackSuccess())
+        }).catch(error => {
+            throw(error);
+        })
     }
 );
 

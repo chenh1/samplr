@@ -24,7 +24,7 @@ export const loadTracks = () => (
         fetch(`${apiPath}graphql?query={getTracks{id,sessionid}}`).then(data => {
             return data.json();
         }).then(jsonData => {
-            dispatch(loadTracksSuccess(jsonData));
+            dispatch(loadTracksSuccess(jsonData.data.getTracks));
         }).catch(error => {
             throw(error);
         });

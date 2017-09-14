@@ -8,6 +8,7 @@ export default function trackManageReducer(state = initialState.tracks, action) 
             newState = [...newState, state[0]]; 
             return newState;
         case 'TRACKS_LOADED':
+        console.log(action.tracks)
             newState = [...newState, ...action.tracks];
             return newState;
         case 'STOP_RECORDING':

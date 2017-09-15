@@ -50,9 +50,9 @@ export const stopProjectLive = () => {
     }
 };
 
-export const uploadFile = (formData) => {
+export const uploadFile = (formData, trackId) => {
     return dispatch => {
-        fetch(`${apiPath}graphql?query=mutation{uploadAudioFile{originalname,mimetype}}`, {
+        fetch(`${apiPath}graphql?query=mutation{uploadAudioFile(trackid:${trackId}){originalname,mimetype}}`, {
             method:"POST", 
             body: formData 
         }).then(data => {

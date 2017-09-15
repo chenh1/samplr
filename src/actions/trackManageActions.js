@@ -37,14 +37,18 @@ export const stopRecording = (clonedTrack, trackIndex) => ({
     trackIndex
 });
 
+export const deleteTrackSuccess = (trackId) => ({ TYPE: 'DELETE_TRACK_SUCCESS', trackId })
+
 export const deleteTrack = (trackId) => (
     dispatch => {
-        fetch(`${apiPath}graphql?query={getTracks{id,sessionid}}`).then(data => {
+        fetch(`${apiPath}graphql?query=mutation{deleteTrack(trackid:${trackId}){id}}`, {
+            method:"POST"
+        }).then(data => {
             return data.json();
         }).then(jsonData => {
-            dispatch(loadTracksSuccess(jsonData.data.getTracks));
+            dispatch(deleteTrackSuccess(trackId))
         }).catch(error => {
             throw(error);
-        });
+        })
     }
 )

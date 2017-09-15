@@ -7,6 +7,11 @@ export default function trackManageReducer(state = initialState.tracks, action) 
         case 'ADD_TRACK_SUCCESS':
             newState = [...newState, state[0]]; 
             return newState;
+        case 'DELETE_TRACK_SUCCESS':
+            newState = newState.filter((track) => {
+                return track.id !== action.trackId
+            });
+            return newState;
         case 'TRACKS_LOADED':
         console.log(action.tracks)
             newState = [...newState, ...action.tracks];

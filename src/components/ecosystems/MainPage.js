@@ -35,7 +35,7 @@ class MainPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadTracks();
+    this.props.actions.loadTracks(this.props.session.id);
     //this.props.actions.asyncGreetings();
   }
 

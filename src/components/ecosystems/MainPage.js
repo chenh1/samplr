@@ -23,6 +23,7 @@ class MainPage extends React.Component {
     this.produceBlob = this.produceBlob.bind(this);
     this.uploadFileToFetch = this.uploadFileToFetch.bind(this);
     this.addTrack = this.addTrack.bind(this);
+    this.deleteTrack = this.deleteTrack.bind(this);
     this.setLooper;
     this.recorder;
   }
@@ -146,6 +147,10 @@ class MainPage extends React.Component {
     this.props.actions.stopRecording(URL.createObjectURL(file), parseInt(e.target.getAttribute('data-track-id'), 10))
   }
 
+  deleteTrack(e) {
+    this.props.actions.deleteTrack(parseInt(e.target.getAttribute('data-track-id'), 10));
+  }
+
   render() {
     return (
       <div>
@@ -163,7 +168,8 @@ class MainPage extends React.Component {
               trackId={track.id} 
               setTrackEffects={this.props.actions.setTrackEffects} 
               liveNode={this.props.session.liveNode}
-              playing={this.props.session.play} />
+              playing={this.props.session.play}
+              deleteTrack={this.deleteTrack} />
           );
         })}
 

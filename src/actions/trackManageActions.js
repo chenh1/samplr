@@ -36,3 +36,15 @@ export const stopRecording = (clonedTrack, trackIndex) => ({
     clonedTrack,
     trackIndex
 });
+
+export const deleteTrack = (trackId) => (
+    dispatch => {
+        fetch(`${apiPath}graphql?query={getTracks{id,sessionid}}`).then(data => {
+            return data.json();
+        }).then(jsonData => {
+            dispatch(loadTracksSuccess(jsonData.data.getTracks));
+        }).catch(error => {
+            throw(error);
+        });
+    }
+)

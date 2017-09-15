@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 const appState = gql`
   query {
     play
+    
   }
 `;
 

@@ -108,8 +108,7 @@ class MainPage extends React.Component {
   uploadFileToFetch(file, trackId) {
     let formData = new FormData();
     formData.append('attachment', file);
-    console.log(formData);
-    this.props.actions.uploadFile(formData)
+    this.props.actions.uploadFile(formData, trackId)
   }
 
   produceBlob(data) {

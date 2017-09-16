@@ -24,6 +24,7 @@ export default function trackManageReducer(state = initialState.tracks, action) 
             ];
 
             return newState;
+        case: 'AUDIO_DOWNLOADED'
         default:
             return state;
     }

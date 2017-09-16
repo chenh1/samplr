@@ -1,3 +1,7 @@
 .track {
     display: flex;
+
+    &.loaded {
+        background: yellow;
+    }
 }

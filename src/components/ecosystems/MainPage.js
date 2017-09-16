@@ -29,6 +29,7 @@ class MainPage extends React.Component {
   }
 
   componentWillMount() {
+    console.log('mounted')
     this.props.subscribeToSessionPlay(this.playProject);
     this.props.subscribeToSessionStop(this.stopProject);
     this.props.subscribeToAudioStream(this.produceBlob);
@@ -36,7 +37,7 @@ class MainPage extends React.Component {
 
   componentDidMount() {
     this.props.actions.loadTracks(this.props.session.id);
-    //this.props.actions.asyncGreetings();
+    this.props.actions.loadAudioClips(this.props.session.id);
   }
 
   componentWillReceiveProps(nextProps) {

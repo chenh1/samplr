@@ -8,7 +8,7 @@ export default function trackManageReducer(state = initialState.tracks, action) 
             newState = [...newState, state[0]]; 
             return newState;
         case 'DELETE_TRACK_SUCCESS':
-            newState = newState.filter((track) => {
+            newState = newState.filter(track => {
                 return track.id !== action.trackId
             });
             return newState;
@@ -24,7 +24,14 @@ export default function trackManageReducer(state = initialState.tracks, action) 
             ];
 
             return newState;
-        case: 'AUDIO_DOWNLOADED'
+        case 'AUDIO_DOWNLOADED':
+            newState = newState.map(track => {
+                return action.srcs.filter(src => {
+                    return src.id === track.id
+                })
+            });
+
+            return newState;
         default:
             return state;
     }

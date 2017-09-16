@@ -60,7 +60,7 @@ export const downloadAudio = (sessionId) => {
             return data.json();
         }).then(res => {
             console.log(res);
-            res.data.getfiles.map((file) => {
+            const srcs = res.data.getfiles.map((file) => {
                 let byteCharacters = atob(file.clip);
                 let byteArrays = [];
                 let sliceSize = 512;
@@ -84,10 +84,11 @@ export const downloadAudio = (sessionId) => {
                 console.log(blob);
 
                 return {
-
-                }
-                dispatch(downloadedAudio(url));
-            })
+                    id: file.trackid,
+                    src: url
+                };
+            });
+            dispatch(downloadedAudio(srcs));
         })
     }
 }

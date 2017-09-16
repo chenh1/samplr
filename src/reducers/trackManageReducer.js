@@ -26,11 +26,14 @@ export default function trackManageReducer(state = initialState.tracks, action) 
             return newState;
         case 'AUDIO_DOWNLOADED':
             newState = newState.map(track => {
-                return action.srcs.filter(src => {
+                let filtered = action.srcs.filter(src => {
+                    console.log('src', src)
                     return src.id === track.id
-                })
+                });
+                console.log(filtered.length > 0 ? filtered[0] : track);
+                return filtered.length > 0 ? filtered[0] : track;
             });
-
+            console.log(newState);
             return newState;
         default:
             return state;

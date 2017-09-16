@@ -55,7 +55,7 @@ export const downloadedAudio = (srcs) => {
 
 export const downloadAudio = (sessionId) => {
     return dispatch => {
-        fetch(`${apiPath}graphql?query={getfile(sessionid:${sessionId}){clip,id}}`).then(data => {
+        fetch(`${apiPath}graphql?query={getfiles(sessionid:${sessionId}){clip,id,trackid}}`).then(data => {
             console.log(data);
             return data.json();
         }).then(res => {

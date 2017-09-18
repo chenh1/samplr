@@ -4,7 +4,7 @@ import { MainControls, Track, HeadRail, EffectsRig } from '../organisms';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { compose, mapProps, withHandlers, pure } from 'recompose';
-import { appState, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
+import { appState, tracksState, onTrackAdded, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
 import { graphql } from 'react-apollo';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
@@ -32,7 +32,10 @@ class MainPage extends React.Component {
     console.log('mounted')
     this.props.subscribeToSessionPlay(this.playProject);
     this.props.subscribeToSessionStop(this.stopProject);
-    this.props.subscribeToAudioStream(this.produceBlob);
+    this.props.subscribeToAddTrack(() => {
+      this.props.actions.loadTracks(this.props.session.id);
+    });
+    //this.props.subscribeToAudioStream(this.produceBlob);
   }
 
   componentDidMount() {
@@ -204,6 +207,7 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   graphql(appState),
+  graphql(tracksState),
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
     return {
@@ -231,7 +235,7 @@ export default compose(
       },
       subscribeToAddTrack: (callback) => {
         return subscribeToMore({
-          document: '',
+          document: onTrackAdded,
           onError: (e) => {
             return console.error('Error: ', e)
           },
@@ -255,5 +259,5 @@ export default compose(
       ...props
     }
   }),
-  pure //once props grow, convert to onlyUpdateForKeys
+  pure
 )(MainPage);

@@ -4,15 +4,28 @@ import gql from 'graphql-tag';
 const appState = gql`
   query {
     play
-    
   }
 `;
+
+const tracksState = gql`
+  query {
+    getTracks(sessionid:1) {
+      id
+    }
+  }
+`
+
+const onTrackAdded = gql`
+  subscription {
+    trackCreated
+  }
+`
 
 const onPlayActive = gql`
   subscription {
     startPlayTriggered
   }
-`;
+`
 
 const onStopActive = gql`
   subscription {
@@ -26,4 +39,4 @@ const onFileUploaded = gql`
   }
 `
 
-export { appState, onPlayActive, onStopActive, onFileUploaded };
+export { appState, onTrackAdded, tracksState, onPlayActive, onStopActive, onFileUploaded };

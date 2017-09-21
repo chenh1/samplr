@@ -5,7 +5,6 @@ export default function trackManageReducer(state = initialState.tracks, action) 
 
     switch (action.type) {
         case 'ADD_TRACK_SUCCESS':
-            newState = [...newState, state[0]]; 
             return newState;
         case 'DELETE_TRACK_SUCCESS':
             newState = newState.filter(track => {

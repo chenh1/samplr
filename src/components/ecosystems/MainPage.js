@@ -244,8 +244,18 @@ export default compose(
             return console.error('Error: ', e)
           },
           updateQuery: (previousResult, results) => { 
-            console.log('prev & next: ', previousResult, results) 
             callback(results.subscriptionData.data.trackCreated);
+          }
+        })
+      },
+      subscribeToDeleteTrack: (callback) => {
+        return subscribeToMore({
+          document: onTrackDeleted,
+          onError: (e) => {
+            return console.error('Error: ', e)
+          },
+          updateQuery: (previousResult, results) => { 
+            callback(results.subscriptionData.data.trackDeleted);
           }
         })
       },

@@ -33,6 +33,7 @@ class MainPage extends React.Component {
     this.props.subscribeToSessionPlay(this.playProject);
     this.props.subscribeToSessionStop(this.stopProject);
     this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack);
+    this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess);
     //this.props.subscribeToAudioStream(this.produceBlob);
   }
 

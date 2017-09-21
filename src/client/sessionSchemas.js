@@ -8,35 +8,41 @@ const appState = gql`
 `;
 
 const tracksState = gql`
-  query {
-    getTracks(sessionid:1) {
+  query ($sessionid: Int, $id: Int) {
+    getTracks(sessionid: $sessionid, id: $id) {
       id
     }
   }
-`
+`;
 
 const onTrackAdded = gql`
   subscription {
     trackCreated
   }
-`
+`;
+
+const onTrackDeleted = gql`
+  subscription {
+    trackDeleted
+  }
+`;
 
 const onPlayActive = gql`
   subscription {
     startPlayTriggered
   }
-`
+`;
 
 const onStopActive = gql`
   subscription {
     stopTriggered
   }
-`
+`;
 
 const onFileUploaded = gql`
   subscription {
     audioFileUploaded
   }
-`
+`;
 
 export { appState, onTrackAdded, tracksState, onPlayActive, onStopActive, onFileUploaded };

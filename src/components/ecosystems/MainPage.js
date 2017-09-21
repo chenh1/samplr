@@ -32,9 +32,7 @@ class MainPage extends React.Component {
     console.log('mounted')
     this.props.subscribeToSessionPlay(this.playProject);
     this.props.subscribeToSessionStop(this.stopProject);
-    this.props.subscribeToAddTrack(() => {
-      this.props.actions.loadTracks(this.props.session.id);
-    });
+    this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack);
     //this.props.subscribeToAudioStream(this.produceBlob);
   }
 
@@ -207,7 +205,13 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   graphql(appState),
-  graphql(tracksState),
+  graphql(tracksState, {
+    options: (props) => ({
+      variables: {
+        sessionid: props.session.id
+      }
+    })
+  }),
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
     return {
@@ -239,8 +243,9 @@ export default compose(
           onError: (e) => {
             return console.error('Error: ', e)
           },
-          updateQuery: () => {
-            callback();
+          updateQuery: (previousResult, results) => { 
+            console.log('prev & next: ', previousResult, results) 
+            callback(results.subscriptionData.data.trackCreated);
           }
         })
       },

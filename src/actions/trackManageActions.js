@@ -10,6 +10,7 @@ export const addTrack = (sessionId) => (
         }).then(data => {
             return data.json();
         }).then(jsonData => {
+            console.log(jsonData)
             dispatch(addTrackSuccess())
         }).catch(error => {
             throw(error);
@@ -22,6 +23,18 @@ export const loadTracksSuccess = (tracks) => ({ type: 'TRACKS_LOADED', tracks })
 export const loadTracks = (sessionId) => (
     dispatch => {
         fetch(`${apiPath}graphql?query={getTracks(sessionid:${sessionId}){id,sessionid}}`).then(data => {
+            return data.json();
+        }).then(jsonData => {
+            dispatch(loadTracksSuccess(jsonData.data.getTracks));
+        }).catch(error => {
+            throw(error);
+        });
+    }
+);
+
+export const loadSingleTrack = (trackId) => (
+    dispatch => {
+        fetch(`${apiPath}graphql?query={getTracks(id:${trackId}){id,sessionid}}`).then(data => {
             return data.json();
         }).then(jsonData => {
             dispatch(loadTracksSuccess(jsonData.data.getTracks));

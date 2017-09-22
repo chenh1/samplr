@@ -15,6 +15,14 @@ const tracksState = gql`
   }
 `;
 
+const audioClipsState = gql`
+  query ($sessionid: Int, $trackid: Int) {
+    getFiles(sessionid: $sessionid, trackid: $trackid) {
+      id
+    }
+  }
+`
+
 const onTrackAdded = gql`
   subscription {
     trackCreated
@@ -45,4 +53,4 @@ const onFileUploaded = gql`
   }
 `;
 
-export { appState, onTrackAdded, onTrackDeleted, tracksState, onPlayActive, onStopActive, onFileUploaded };
+export { appState, audioClipsState, onTrackAdded, onTrackDeleted, tracksState, onPlayActive, onStopActive, onFileUploaded };

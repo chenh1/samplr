@@ -4,7 +4,7 @@ import { MainControls, Track, HeadRail, EffectsRig } from '../organisms';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { compose, mapProps, withHandlers, pure } from 'recompose';
-import { appState, tracksState, onTrackAdded, onTrackDeleted, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
+import { appState, tracksState, audioClipsState, onTrackAdded, onTrackDeleted, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
 import { graphql } from 'react-apollo';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
@@ -34,7 +34,7 @@ class MainPage extends React.Component {
     this.props.subscribeToSessionStop(this.stopProject);
     this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack);
     this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess);
-    //this.props.subscribeToAudioUpload(this.produceBlob);
+    this.props.subscribeToAudioUpload(this.produceBlob);
   }
 
   componentDidMount() {
@@ -271,6 +271,7 @@ export default compose(
           },
           updateQuery: (previousResult, {fetchMoreResult}) => {
             console.log('fetch more? ', previousResult, fetchMoreResult)
+            //@TODO return results like from above
             callback(fetchMoreResult);
           }
         })

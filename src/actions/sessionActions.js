@@ -36,7 +36,7 @@ export const stopProjectLive = () => {
     }
 };
 
-export const uploadFile = (formData, sessiondId, trackId) => {
+export const uploadFile = (formData, sessionId, trackId) => {
     return dispatch => {
         fetch(`${apiPath}graphql?query=mutation{uploadAudioFile(sessionid:${sessionId},trackid:${trackId}){originalname,mimetype}}`, {
             method:"POST", 
@@ -53,9 +53,9 @@ export const downloadedAudio = (srcs) => {
     return {type:'AUDIO_DOWNLOADED', srcs};
 }
 
-export const downloadAudio = (sessionId) => {
+export const downloadAudio = (sessionId, trackId) => {
     return dispatch => {
-        fetch(`${apiPath}graphql?query={getfiles(sessionid:${sessionId}){clip,id,trackid}}`).then(data => {
+        fetch(`${apiPath}graphql?query={getfiles(${sessionId ? `sessionid:${sessionId}` : `trackid:${trackId}`}){clip,id,trackid}}`).then(data => {
             console.log(data);
             return data.json();
         }).then(res => {

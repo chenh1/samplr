@@ -34,7 +34,7 @@ class MainPage extends React.Component {
     this.props.subscribeToSessionStop(this.stopProject);
     this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack);
     this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess);
-    //this.props.subscribeToAudioStream(this.produceBlob);
+    //this.props.subscribeToAudioUpload(this.produceBlob);
   }
 
   componentDidMount() {
@@ -112,7 +112,7 @@ class MainPage extends React.Component {
   uploadFileToFetch(file, trackId) {
     let formData = new FormData();
     formData.append('attachment', file);
-    this.props.actions.uploadFile(formData, trackId)
+    this.props.actions.uploadFile(formData, this.props.session.id, trackId)
   }
 
   produceBlob(data) {
@@ -263,7 +263,7 @@ export default compose(
           }
         })
       },
-      subscribeToAudioStream: (callback) => {
+      subscribeToAudioUpload: (callback) => {
         return subscribeToMore({
           document: onFileUploaded,
           onError: (e) => {

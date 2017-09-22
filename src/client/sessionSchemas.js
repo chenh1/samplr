@@ -45,4 +45,4 @@ const onFileUploaded = gql`
   }
 `;
 
-export { appState, onTrackAdded, tracksState, onPlayActive, onStopActive, onFileUploaded };
+export { appState, onTrackAdded, onTrackDeleted, tracksState, onPlayActive, onStopActive, onFileUploaded };

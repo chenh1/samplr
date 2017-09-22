@@ -151,6 +151,7 @@ class MainPage extends React.Component {
   }
 
   deleteTrack(e) {
+    console.log(e.target.getAttribute('data-track-id'))
     this.props.actions.deleteTrack(parseInt(e.target.getAttribute('data-track-id'), 10));
   }
 
@@ -245,6 +246,7 @@ export default compose(
             return console.error('Error: ', e)
           },
           updateQuery: (previousResult, results) => { 
+            console.log(previousResult, results)
             callback(results.subscriptionData.data.trackCreated);
           }
         })
@@ -256,6 +258,7 @@ export default compose(
             return console.error('Error: ', e)
           },
           updateQuery: (previousResult, results) => { 
+            console.log(results)
             callback(results.subscriptionData.data.trackDeleted);
           }
         })

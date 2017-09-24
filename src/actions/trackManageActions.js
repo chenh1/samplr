@@ -1,7 +1,15 @@
-import 'whatwg-fetch';
+//import 'whatwg-fetch';
 import { apiPath } from '../apiPath';
+import * as types from './actionTypes';
 
-export const addTrackSuccess = () => ({ type: 'ADD_TRACK_SUCCESS' });
+export const addTrackSuccess = () => ({ type: types.ADD_TRACK_SUCCESS });
+export const loadTracksSuccess = tracks => ({ type: types.TRACKS_LOADED, tracks });
+export const stopRecording = (clonedTrack, trackIndex) => ({
+    type: types.STOP_RECORDING,
+    clonedTrack,
+    trackIndex
+});
+export const deleteTrackSuccess = trackId => ({ type: types.DELETE_TRACK_SUCCESS, trackId });
 
 export const addTrack = (sessionId) => (
     dispatch => {
@@ -17,8 +25,6 @@ export const addTrack = (sessionId) => (
         })
     }
 );
-
-export const loadTracksSuccess = (tracks) => ({ type: 'TRACKS_LOADED', tracks });
 
 export const loadTracks = (sessionId) => (
     dispatch => {
@@ -44,14 +50,6 @@ export const loadSingleTrack = (trackId) => (
     }
 );
 
-export const stopRecording = (clonedTrack, trackIndex) => ({
-    type: 'STOP_RECORDING',
-    clonedTrack,
-    trackIndex
-});
-
-export const deleteTrackSuccess = (trackId) => ({ type: 'DELETE_TRACK_SUCCESS', trackId })
-
 export const deleteTrack = (trackId) => (
     dispatch => {
         fetch(`${apiPath}graphql?query=mutation{deleteTrack(trackid:${trackId}){id}}`, {
@@ -64,4 +62,4 @@ export const deleteTrack = (trackId) => (
             throw(error);
         })
     }
-)
+);

@@ -28,7 +28,7 @@ class MainPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.subscribeToSessionPlay(this.playProject);
+    this.props.subscribeToSessionPlay(this.playProject, this.props.subscribeToMore);
     this.props.subscribeToSessionStop(this.stopProject);
     this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack);
     this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess);
@@ -190,6 +190,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+import {subscribeToAddTrack, subscribeToSessionPlay, subscribeToSessionStop, subscribeToDeleteTrack, subscribeToAudioUpload} from '../../client/subscriptions';
+
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   graphql(appState),
@@ -209,18 +211,9 @@ export default compose(
   }),
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
+
     return {
-      subscribeToSessionPlay: (callback) => { //TODO: MOVE THESE TO SERVICES
-        return subscribeToMore({
-          document: onPlayActive,
-          onError: (e) => {
-            return console.error('Error: ', e)
-          },
-          updateQuery: () => {  
-            callback();
-          }
-        })
-      },
+      subscribeToSessionPlay: subscribeToSessionPlay,
       subscribeToSessionStop: (callback) => {
         return subscribeToMore({
           document: onStopActive,
@@ -268,6 +261,7 @@ export default compose(
           }
         })
       },
+      subscribeToMore,
       ...props
     }
   }),

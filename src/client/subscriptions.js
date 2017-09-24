@@ -16,7 +16,7 @@ export const subscribeToSessionStop = (callback, subscribeToMore) => (
     })
 );
 
-export const subscribeToAddTrack = (callback) => (
+export const subscribeToAddTrack = (callback, subscribeToMore) => (
     subscribeToMore({
         document: onTrackAdded,
         onError: e => console.error('Error: ', e),
@@ -26,7 +26,7 @@ export const subscribeToAddTrack = (callback) => (
     })
 )
 
-export const subscribeToDeleteTrack = (callback) => (
+export const subscribeToDeleteTrack = (callback, subscribeToMore) => (
     subscribeToMore({
         document: onTrackDeleted,
         onError: e => console.error('Error: ', e),
@@ -36,7 +36,7 @@ export const subscribeToDeleteTrack = (callback) => (
     })
 );
  
-export const subscribeToAudioUpload = (callback) => (
+export const subscribeToAudioUpload = (callback, subscribeToMore) => (
     subscribeToMore({
         document: onFileUploaded,
         onError: e => console.error('Error: ', e),

@@ -1,12 +1,13 @@
 import { apiPath } from '../apiPath';
+import * as types from './actionTypes';
 
-export const playProject = () => ({ type: 'PLAY_PROJECT' });
-export const stopProject = () => ({ type: 'STOP_PROJECT' });
-export const incrementLiveNode = () => ({ type: 'INCREMENT_LIVE_NODE' });
-export const loopLiveNode = () => ({ type: 'LOOP_LIVE_NODE' });
-export const recordStart = () => ({ type: 'RECORD_START' });
-export const playProjectLiveDone = () => ({ type: 'PLAY_PROJECT_LIVE_DONE' });
-export const downloadedAudio = srcs => ({ type:'AUDIO_DOWNLOADED', srcs });
+export const playProject = () => ({ type: types.PLAY_PROJECT });
+export const stopProject = () => ({ type: types.STOP_PROJECT });
+export const incrementLiveNode = () => ({ type: types.INCREMENT_LIVE_NODE });
+export const loopLiveNode = () => ({ type: types.LOOP_LIVE_NODE });
+export const recordStart = () => ({ type: types.RECORD_START });
+export const playProjectLiveDone = () => ({ type: types.PLAY_PROJECT_LIVE_DONE });
+export const downloadedAudio = srcs => ({ type: types.AUDIO_DOWNLOADED, srcs });
 
 export const playProjectLive = () => (
     dispatch => {

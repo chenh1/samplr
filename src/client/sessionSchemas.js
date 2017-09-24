@@ -1,13 +1,12 @@
 import gql from 'graphql-tag';
 
-//need to add getfile at some point
-const appState = gql`
+export const appState = gql`
   query {
     play
   }
 `;
 
-const tracksState = gql`
+export const tracksState = gql`
   query ($sessionid: Int, $id: Int) {
     getTracks(sessionid: $sessionid, id: $id) {
       id
@@ -15,7 +14,7 @@ const tracksState = gql`
   }
 `;
 
-const audioClipsState = gql`
+export const audioClipsState = gql`
   query ($sessionid: Int, $id: Int) {
     getFiles(sessionid: $sessionid, id: $id) {
       id
@@ -23,34 +22,32 @@ const audioClipsState = gql`
   }
 `
 
-const onTrackAdded = gql`
+export const onTrackAdded = gql`
   subscription {
     trackCreated
   }
 `;
 
-const onTrackDeleted = gql`
+export const onTrackDeleted = gql`
   subscription {
     trackDeleted
   }
 `;
 
-const onPlayActive = gql`
+export const onPlayActive = gql`
   subscription {
     startPlayTriggered
   }
 `;
 
-const onStopActive = gql`
+export const onStopActive = gql`
   subscription {
     stopTriggered
   }
 `;
 
-const onFileUploaded = gql`
+export const onFileUploaded = gql`
   subscription {
     audioFileUploaded
   }
 `;
-
-export { appState, audioClipsState, onTrackAdded, onTrackDeleted, tracksState, onPlayActive, onStopActive, onFileUploaded };

@@ -34,7 +34,7 @@ class MainPage extends React.Component {
     this.props.subscribeToSessionStop(this.stopProject);
     this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack);
     this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess);
-    this.props.subscribeToAudioUpload(this.produceBlob);
+    this.props.subscribeToAudioUpload(this.props.actions.downloadAudio);
   }
 
   componentDidMount() {
@@ -278,7 +278,7 @@ export default compose(
           },
           updateQuery: (previousResult, results) => {
             console.log('fetch more? ', previousResult, results)
-            callback(results.subscriptionData.data.audioFileUploaded);
+            callback(props.session.id, results.subscriptionData.data.audioFileUploaded);
           }
         })
       },

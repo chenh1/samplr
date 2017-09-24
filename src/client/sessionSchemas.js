@@ -16,8 +16,8 @@ const tracksState = gql`
 `;
 
 const audioClipsState = gql`
-  query ($sessionid: Int, $trackid: Int) {
-    getFiles(sessionid: $sessionid, trackid: $trackid) {
+  query ($sessionid: Int, $id: Int) {
+    getFiles(sessionid: $sessionid, id: $id) {
       id
     }
   }

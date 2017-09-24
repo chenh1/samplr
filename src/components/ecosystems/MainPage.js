@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { MainControls, Track, HeadRail, EffectsRig } from '../organisms';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { compose, mapProps, withHandlers, pure } from 'recompose';
-import { appState, tracksState, audioClipsState, onTrackAdded, onTrackDeleted, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
 import { graphql } from 'react-apollo';
+import { MainControls, Track, EffectsRig } from '../organisms';
+import { appState, tracksState, audioClipsState, onTrackAdded, onTrackDeleted, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
@@ -20,7 +20,6 @@ class MainPage extends React.Component {
     this.playAllTracks = this.playAllTracks.bind(this);
     this.uploadAudio = this.uploadAudio.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
-    this.produceBlob = this.produceBlob.bind(this);
     this.uploadFileToFetch = this.uploadFileToFetch.bind(this);
     this.addTrack = this.addTrack.bind(this);
     this.deleteTrack = this.deleteTrack.bind(this);
@@ -29,7 +28,6 @@ class MainPage extends React.Component {
   }
 
   componentWillMount() {
-    console.log('mounted')
     this.props.subscribeToSessionPlay(this.playProject);
     this.props.subscribeToSessionStop(this.stopProject);
     this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack);
@@ -115,10 +113,6 @@ class MainPage extends React.Component {
     this.props.actions.uploadFile(formData, this.props.session.id, trackId)
   }
 
-  produceBlob(data) {
-    console.log(data);
-  }
-
   recordTrack(e) {
     const eventTrackId = parseInt(e.target.getAttribute('data-track-id'), 10);
 
@@ -131,12 +125,9 @@ class MainPage extends React.Component {
       .then(stream => {
         this.recorder = new MediaRecorder(stream);
         this.recorder.ondataavailable = e => {
-          console.log(e.data);
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){
-            console.log('audiochunks: ', audioChunks);
             let blob = new Blob(audioChunks,{type:'audio/x-mpeg-3'});
-            console.log('blob that was made: ', blob);
             this.uploadFileToFetch(blob, eventTrackId);
             this.stopRecording(URL.createObjectURL(blob), eventTrackId);
           }
@@ -151,7 +142,6 @@ class MainPage extends React.Component {
   }
 
   deleteTrack(e) {
-    console.log(e.target.getAttribute('data-track-id'))
     this.props.actions.deleteTrack(parseInt(e.target.getAttribute('data-track-id'), 10));
   }
 
@@ -160,15 +150,14 @@ class MainPage extends React.Component {
       <div>
         <MainControls playProjectLive={this.props.actions.playProjectLive} playProject={this.playProject} stopProject={this.stopProject}/>
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
-        <HeadRail />
 
         {this.props.tracks.map((track, index) => {
           return (
             <Track
+              key={'track' + index} 
               uploadAudio={this.uploadAudio}
               audioSrc={track.src}
               recordStart={this.recordTrack}
-              key={'track' + index} 
               trackId={track.id} 
               setTrackEffects={this.props.actions.setTrackEffects} 
               liveNode={this.props.session.liveNode}
@@ -176,9 +165,6 @@ class MainPage extends React.Component {
               deleteTrack={this.deleteTrack} />
           );
         })}
-
-        <button onClick={this.props.actions.downloadAudio}>TEST DOWNLOAD TRACK</button>
-        <audio src={this.props.session.testSrc}></audio>
 
         <button onClick={this.addTrack}>Add</button>
       </div>

@@ -1,4 +1,4 @@
-import { appState, tracksState, audioClipsState, onTrackAdded, onTrackDeleted, onPlayActive, onStopActive, onFileUploaded } from '../client/sessionSchemas';
+import { onTrackAdded, onTrackDeleted, onPlayActive, onStopActive, onFileUploaded } from '../client/sessionSchemas';
 
 export const subscribeToSessionPlay = (callback, subscribeToMore) => (
     subscribeToMore({

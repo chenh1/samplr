@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import { compose, mapProps, withHandlers, pure } from 'recompose';
 import { graphql } from 'react-apollo';
 import { MainControls, Track, EffectsRig } from '../organisms';
-import { appState, tracksState, audioClipsState, onTrackAdded, onTrackDeleted, onPlayActive, onStopActive, onFileUploaded } from '../../client/sessionSchemas';
+import { subscribeToAddTrack, subscribeToSessionPlay, subscribeToSessionStop, subscribeToDeleteTrack, subscribeToAudioUpload } from '../../client/subscriptions';
+import { appState, tracksState, audioClipsState } from '../../client/sessionSchemas';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
@@ -190,7 +191,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-import {subscribeToAddTrack, subscribeToSessionPlay, subscribeToSessionStop, subscribeToDeleteTrack, subscribeToAudioUpload} from '../../client/subscriptions';
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),

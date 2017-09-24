@@ -55,12 +55,12 @@ export const downloadedAudio = (srcs) => {
 
 export const downloadAudio = (sessionId, trackId) => {
     return dispatch => {
-        fetch(`${apiPath}graphql?query={getfiles(${sessionId ? `sessionid:${sessionId}` : `trackid:${trackId}`}){clip,id,trackid}}`).then(data => {
+        fetch(`${apiPath}graphql?query={getFiles(${sessionId ? `sessionid:${sessionId}` : `trackid:${trackId}`}){clip,id,trackid}}`).then(data => {
             console.log(data);
             return data.json();
         }).then(res => {
             console.log(res);
-            const srcs = res.data.getfiles.map((file) => {
+            const srcs = res.data.getFiles.map((file) => {
                 let byteCharacters = atob(file.clip);
                 let byteArrays = [];
                 let sliceSize = 512;

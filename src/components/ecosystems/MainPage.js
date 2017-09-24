@@ -214,6 +214,13 @@ export default compose(
       }
     })
   }),
+  graphql(audioClipsState, {
+    options: (props) => ({
+      variables: {
+        sessionid: props.session.id
+      }
+    })
+  }),
   mapProps(({data, ...props}) => {
     const subscribeToMore = data && data.subscribeToMore;
     return {

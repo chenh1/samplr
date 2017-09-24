@@ -276,10 +276,9 @@ export default compose(
           onError: (e) => {
             return console.error('Error: ', e)
           },
-          updateQuery: (previousResult, {fetchMoreResult}) => {
-            console.log('fetch more? ', previousResult, fetchMoreResult)
-            //@TODO return results like from above
-            callback(fetchMoreResult);
+          updateQuery: (previousResult, results) => {
+            console.log('fetch more? ', previousResult, results)
+            callback(results.subscriptionData.data.audioFileUploaded);
           }
         })
       },

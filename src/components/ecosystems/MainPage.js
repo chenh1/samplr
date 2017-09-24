@@ -29,10 +29,10 @@ class MainPage extends React.Component {
 
   componentWillMount() {
     this.props.subscribeToSessionPlay(this.playProject, this.props.subscribeToMore);
-    this.props.subscribeToSessionStop(this.stopProject);
-    this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack);
-    this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess);
-    this.props.subscribeToAudioUpload(this.props.actions.downloadAudio);
+    this.props.subscribeToSessionStop(this.stopProject, this.props.subscribeToMore);
+    this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack, this.props.subscribeToMore);
+    this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess, this.props.subscribeToMore);
+    this.props.subscribeToAudioUpload(this.props.actions.downloadAudio, this.props.subscribeToMore);
   }
 
   componentDidMount() {
@@ -209,61 +209,14 @@ export default compose(
       }
     })
   }),
-  mapProps(({data, ...props}) => {
-    const subscribeToMore = data && data.subscribeToMore;
-
-    return {
-      subscribeToSessionPlay: subscribeToSessionPlay,
-      subscribeToSessionStop: (callback) => {
-        return subscribeToMore({
-          document: onStopActive,
-          onError: (e) => {
-            return console.error('Error: ', e)
-          },
-          updateQuery: () => {  
-            callback();
-          }
-        })
-      },
-      subscribeToAddTrack: (callback) => {
-        return subscribeToMore({
-          document: onTrackAdded,
-          onError: (e) => {
-            return console.error('Error: ', e)
-          },
-          updateQuery: (previousResult, results) => { 
-            console.log(previousResult, results)
-            callback(results.subscriptionData.data.trackCreated);
-          }
-        })
-      },
-      subscribeToDeleteTrack: (callback) => {
-        return subscribeToMore({
-          document: onTrackDeleted,
-          onError: (e) => {
-            return console.error('Error: ', e)
-          },
-          updateQuery: (previousResult, results) => { 
-            console.log(results)
-            callback(results.subscriptionData.data.trackDeleted);
-          }
-        })
-      },
-      subscribeToAudioUpload: (callback) => {
-        return subscribeToMore({
-          document: onFileUploaded,
-          onError: (e) => {
-            return console.error('Error: ', e)
-          },
-          updateQuery: (previousResult, results) => {
-            console.log('fetch more? ', previousResult, results)
-            callback(props.session.id, results.subscriptionData.data.audioFileUploaded);
-          }
-        })
-      },
-      subscribeToMore,
-      ...props
-    }
-  }),
+  mapProps(({data, ...props}) => ({
+    subscribeToMore: data && data.subscribeToMore,
+    subscribeToSessionPlay,
+    subscribeToSessionStop,
+    subscribeToAddTrack,
+    subscribeToDeleteTrack,
+    subscribeToAudioUpload,
+    ...props
+  })),
   pure
 )(MainPage);

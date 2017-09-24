@@ -38,7 +38,7 @@ export const stopProjectLive = () => {
 
 export const uploadFile = (formData, sessionId, trackId) => {
     return dispatch => {
-        fetch(`${apiPath}graphql?query=mutation{uploadAudioFile(sessionid:${sessionId},trackid:${trackId}){originalname,mimetype}}`, {
+        fetch(`${apiPath}graphql?query=mutation{uploadAudioFile(sessionid:${sessionId},trackid:${trackId}){id}}`, {
             method:"POST", 
             body: formData 
         }).then(data => {

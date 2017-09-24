@@ -10,6 +10,7 @@ import { appState, tracksState, audioClipsState } from '../../client/sessionSche
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
+import * as helpers from '../../helpers/audioProcessing';
 
 class MainPage extends React.Component {
   constructor(props, context) {
@@ -119,6 +120,8 @@ class MainPage extends React.Component {
 
     this.props.actions.recordStart();
     this.playProject();
+
+    //helpers.processAudioChunks(this.recorder, this.uploadFileToFetch, this.stopRecording, eventTrackId)
 
     let audioChunks = [];
 

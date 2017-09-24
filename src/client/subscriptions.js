@@ -36,12 +36,12 @@ export const subscribeToDeleteTrack = (callback, subscribeToMore) => (
     })
 );
  
-export const subscribeToAudioUpload = (callback, subscribeToMore) => (
+export const subscribeToAudioUpload = (sessionId, callback, subscribeToMore) => (
     subscribeToMore({
         document: onFileUploaded,
         onError: e => console.error('Error: ', e),
         updateQuery: (previousResult, results) => (
-            callback(props.session.id, results.subscriptionData.data.audioFileUploaded)
+            callback(sessionId, results.subscriptionData.data.audioFileUploaded)
         )
     })
 );

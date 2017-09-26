@@ -1,4 +1,5 @@
 import { apiPath } from '../apiPath';
+import { processAudioCollection } from '../helpers/audioProcessing';
 import * as types from './actionTypes';
 
 export const playProject = () => ({ type: types.PLAY_PROJECT });
@@ -51,7 +52,8 @@ export const downloadAudio = (sessionId, id) => {
         fetch(`${apiPath}graphql?query={getFiles(${id ? `id:${id}` : `sessionid:${sessionId}`}){clip,id,trackid}}`).then(data => {
             return data.json();
         }).then(res => {
-            const srcs = res.data.getFiles.map((file) => {
+            const srcs = processAudioCollection(res.data.getFiles);
+            /*res.data.getFiles.map((file) => {
                 let byteCharacters = atob(file.clip);
                 let byteArrays = [];
                 let sliceSize = 512;
@@ -77,7 +79,7 @@ export const downloadAudio = (sessionId, id) => {
                     id: file.trackid,
                     src: url
                 };
-            });
+            });*/
             dispatch(downloadedAudio(srcs));
         })
     }

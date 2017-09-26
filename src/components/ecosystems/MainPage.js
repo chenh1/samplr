@@ -31,7 +31,6 @@ class MainPage extends React.Component {
 
   componentWillMount() {
     const subscribeToMore = this.props.subscribeToMore;
-    
     this.props.subscribeToSessionPlay(this.playProject, subscribeToMore);
     this.props.subscribeToSessionStop(this.stopProject, subscribeToMore);
     this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack, subscribeToMore);
@@ -119,12 +118,10 @@ class MainPage extends React.Component {
 
   recordTrack(e) {
     const eventTrackId = parseInt(e.target.getAttribute('data-track-id'), 10);
-
+    
     this.props.actions.recordStart();
     this.playProject();
 
-    //helpers.processAudioChunks(this.recorder, eventTrackId, this.props)
-    //*
     let audioChunks = [];
 
     navigator.mediaDevices.getUserMedia({audio:true})
@@ -141,7 +138,6 @@ class MainPage extends React.Component {
         }
         this.recorder.start();
       }).catch(e => console.log(e));
-      //*/
   }
 
   uploadAudio(e) {
@@ -197,7 +193,6 @@ function mapDispatchToProps(dispatch) {
     ), dispatch)
   };
 }
-
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),

@@ -54,9 +54,7 @@ export const deleteTrack = (trackId) => (
     dispatch => {
         fetch(`${apiPath}graphql?query=mutation{deleteTrack(trackid:${trackId}){id}}`, {
             method:"POST"
-        }).then(data => {
-            return data.json();
-        }).then(jsonData => {
+        }).then(data => {  
             dispatch(deleteTrackSuccess(trackId))
         }).catch(error => {
             throw(error);

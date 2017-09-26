@@ -30,11 +30,13 @@ class MainPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.subscribeToSessionPlay(this.playProject, this.props.subscribeToMore);
-    this.props.subscribeToSessionStop(this.stopProject, this.props.subscribeToMore);
-    this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack, this.props.subscribeToMore);
-    this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess, this.props.subscribeToMore);
-    this.props.subscribeToAudioUpload(this.props.actions.downloadAudio, this.props.subscribeToMore);
+    const subscribeToMore = this.props.subscribeToMore;
+    
+    this.props.subscribeToSessionPlay(this.playProject, subscribeToMore);
+    this.props.subscribeToSessionStop(this.stopProject, subscribeToMore);
+    this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack, subscribeToMore);
+    this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess, subscribeToMore);
+    this.props.subscribeToAudioUpload(this.props.session.id, this.props.actions.downloadAudio, subscribeToMore);
   }
 
   componentDidMount() {
@@ -121,13 +123,14 @@ class MainPage extends React.Component {
     this.props.actions.recordStart();
     this.playProject();
 
-    //helpers.processAudioChunks(this.recorder, this.uploadFileToFetch, this.stopRecording, eventTrackId)
-
+    //helpers.processAudioChunks(this.recorder, eventTrackId, this.props)
+    //*
     let audioChunks = [];
 
     navigator.mediaDevices.getUserMedia({audio:true})
       .then(stream => {
         this.recorder = new MediaRecorder(stream);
+        console.log(this.recorder)
         this.recorder.ondataavailable = e => {
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){
@@ -138,6 +141,7 @@ class MainPage extends React.Component {
         }
         this.recorder.start();
       }).catch(e => console.log(e));
+      //*/
   }
 
   uploadAudio(e) {

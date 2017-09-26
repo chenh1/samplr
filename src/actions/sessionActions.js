@@ -39,6 +39,7 @@ export const uploadFile = (formData, sessionId, trackId) => {
             method:"POST", 
             body: formData 
         }).then(data => {
+            console.log('upload dispatched')
             dispatch(stopProject());
             return data;
         })

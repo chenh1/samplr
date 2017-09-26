@@ -40,7 +40,6 @@ export const uploadFile = (formData, sessionId, trackId) => {
             method:"POST", 
             body: formData 
         }).then(data => {
-            console.log('upload dispatched')
             dispatch(stopProject());
             return data;
         })
@@ -51,36 +50,8 @@ export const downloadAudio = (sessionId, id) => {
     return dispatch => {
         fetch(`${apiPath}graphql?query={getFiles(${id ? `id:${id}` : `sessionid:${sessionId}`}){clip,id,trackid}}`).then(data => {
             return data.json();
-        }).then(res => {
-            const srcs = processAudioCollection(res.data.getFiles);
-            /*res.data.getFiles.map((file) => {
-                let byteCharacters = atob(file.clip);
-                let byteArrays = [];
-                let sliceSize = 512;
-
-                for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                    const slice = byteCharacters.slice(offset, offset + sliceSize);
-                    
-                    const byteNumbers = new Array(slice.length);
-                    for (let i = 0; i < slice.length; i++) {
-                    byteNumbers[i] = slice.charCodeAt(i);
-                    }
-                    
-                    const byteArray = new Uint8Array(byteNumbers);
-                    
-                    byteArrays.push(byteArray);
-                }
-
-                const blob = new Blob(byteArrays, {type: 'audio/x-mpeg-3'});
-
-                let url = URL.createObjectURL(blob);
-
-                return {
-                    id: file.trackid,
-                    src: url
-                };
-            });*/
-            dispatch(downloadedAudio(srcs));
+        }).then(res => {            
+            dispatch(downloadedAudio(processAudioCollection(res.data.getFiles)));
         })
     }
 }

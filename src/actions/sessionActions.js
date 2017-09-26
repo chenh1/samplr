@@ -15,10 +15,10 @@ export const playProjectLive = () => (
         fetch(`${apiPath}graphql?query=mutation{startPlay}`, {
             method:"POST"
         }).then(data => {
-            return data.json();
-        }).then(jsonData => {
             dispatch(playProjectLiveDone());
-        });
+        }).catch(error => {
+            throw(error);
+        })
     }
 );
 
@@ -27,9 +27,9 @@ export const stopProjectLive = () => {
         fetch(`${apiPath}graphql?query=mutation{stopPlay}`, {
             method:"POST"
         }).then(data => {
-            return data.json();
-        }).then(jsonData => {
             dispatch(stopProject());
+        }).catch(error => {
+            throw(error);
         });
     }
 };

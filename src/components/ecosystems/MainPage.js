@@ -10,7 +10,7 @@ import { appState, tracksState, audioClipsState } from '../../client/sessionSche
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
-import * as helpers from '../../helpers/audioProcessing';
+import * as helpers from '../../helpers/looper';
 
 class MainPage extends React.Component {
   constructor(props, context) {
@@ -74,15 +74,7 @@ class MainPage extends React.Component {
       this.playAllTracks();
       
       this.setLooper = setInterval(() => {
-        if (this.props.session.liveNode < 3) {
-          this.props.actions.incrementLiveNode();
-        } else {
-          this.props.actions.loopLiveNode();
-          if (this.recorder && this.recorder.state !== "inactive") {
-            this.recorder.stop();
-          }
-          this.playAllTracks();
-        }
+        helpers.looper(this.recorder, this.props, this.playAllTracks)
       }, beatInterval);
     }
   }

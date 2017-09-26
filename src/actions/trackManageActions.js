@@ -16,9 +16,6 @@ export const addTrack = (sessionId) => (
         fetch(`${apiPath}graphql?query=mutation{createTrack(sessionid:${sessionId}){id}}`, {
             method:"POST"
         }).then(data => {
-            return data.json();
-        }).then(jsonData => {
-            console.log(jsonData)
             dispatch(addTrackSuccess())
         }).catch(error => {
             throw(error);

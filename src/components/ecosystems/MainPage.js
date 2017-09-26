@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { MainControls, Track, HeadRail, EffectsRig } from '../organisms';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { compose, mapProps, withHandlers, pure } from 'recompose';
-import { playState, onPlayStateChanged } from '../../client/sessionSchemas';
 import { graphql } from 'react-apollo';
+import { MainControls, Track, EffectsRig } from '../organisms';
+import { subscribeToAddTrack, subscribeToSessionPlay, subscribeToSessionStop, subscribeToDeleteTrack, subscribeToAudioUpload } from '../../client/subscriptions';
+import { appState, tracksState, audioClipsState } from '../../client/sessionSchemas';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
+import * as helpers from '../../helpers/looper';
 
 class MainPage extends React.Component {
   constructor(props, context) {
@@ -20,18 +22,25 @@ class MainPage extends React.Component {
     this.playAllTracks = this.playAllTracks.bind(this);
     this.uploadAudio = this.uploadAudio.bind(this);
     this.stopRecording = this.stopRecording.bind(this);
+    this.uploadFileToFetch = this.uploadFileToFetch.bind(this);
+    this.addTrack = this.addTrack.bind(this);
+    this.deleteTrack = this.deleteTrack.bind(this);
     this.setLooper;
     this.recorder;
   }
 
   componentWillMount() {
-    console.log('in willmount')
-    this.props.subscribeToSessionState();
+    const subscribeToMore = this.props.subscribeToMore;
+    this.props.subscribeToSessionPlay(this.playProject, subscribeToMore);
+    this.props.subscribeToSessionStop(this.stopProject, subscribeToMore);
+    this.props.subscribeToAddTrack(this.props.actions.loadSingleTrack, subscribeToMore);
+    this.props.subscribeToDeleteTrack(this.props.actions.deleteTrackSuccess, subscribeToMore);
+    this.props.subscribeToAudioUpload(this.props.session.id, this.props.actions.downloadAudio, subscribeToMore);
   }
 
   componentDidMount() {
-    //this.props.actions.loadTracks();
-    this.props.actions.asyncGreetings();
+    this.props.actions.loadTracks(this.props.session.id);
+    this.props.actions.downloadAudio(this.props.session.id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,6 +51,11 @@ class MainPage extends React.Component {
         this.stopProject();
       }
     } 
+  }
+
+  addTrack() {
+    let sessionId = this.props.session.id
+    this.props.actions.addTrack(sessionId);
   }
 
   playAllTracks() {
@@ -60,25 +74,19 @@ class MainPage extends React.Component {
       this.playAllTracks();
       
       this.setLooper = setInterval(() => {
-        if (this.props.session.liveNode < 3) {
-          this.props.actions.incrementLiveNode();
-        } else {
-          this.props.actions.loopLiveNode();
-          if (this.recorder && this.recorder.state !== "inactive") {
-            this.recorder.stop();
-          }
-          this.playAllTracks();
-        }
+        helpers.looper(this.recorder, this.props, this.playAllTracks)
       }, beatInterval);
     }
   }
 
   stopProject() {
-    clearInterval(this.setLooper);
-    this.props.actions.stopProjectLive();
-    
-    if (this.recorder && this.recorder.state !== "inactive") {
-      this.recorder.stop();
+    if (this.props.session.play) {
+      clearInterval(this.setLooper);
+      this.props.actions.stopProjectLive();
+      
+      if (this.recorder && this.recorder.state !== "inactive") {
+        this.recorder.stop();
+      }
     }
   }
 
@@ -94,9 +102,15 @@ class MainPage extends React.Component {
     this.props.actions.stopRecording(clonedTrack, trackIndex);
   }
 
+  uploadFileToFetch(file, trackId) {
+    let formData = new FormData();
+    formData.append('attachment', file);
+    this.props.actions.uploadFile(formData, this.props.session.id, trackId)
+  }
+
   recordTrack(e) {
     const eventTrackId = parseInt(e.target.getAttribute('data-track-id'), 10);
-
+    
     this.props.actions.recordStart();
     this.playProject();
 
@@ -109,6 +123,7 @@ class MainPage extends React.Component {
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){
             let blob = new Blob(audioChunks,{type:'audio/x-mpeg-3'});
+            this.uploadFileToFetch(blob, eventTrackId);
             this.stopRecording(URL.createObjectURL(blob), eventTrackId);
           }
         }
@@ -121,39 +136,38 @@ class MainPage extends React.Component {
     this.props.actions.stopRecording(URL.createObjectURL(file), parseInt(e.target.getAttribute('data-track-id'), 10))
   }
 
+  deleteTrack(e) {
+    this.props.actions.deleteTrack(parseInt(e.target.getAttribute('data-track-id'), 10));
+  }
+
   render() {
-    console.log('live node: ', this.props.session.liveNode)
     return (
       <div>
-        <div>
-          Hello, {this.props.session.firstName}
-        </div>
         <MainControls playProjectLive={this.props.actions.playProjectLive} playProject={this.playProject} stopProject={this.stopProject}/>
         <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
-        <HeadRail />
 
         {this.props.tracks.map((track, index) => {
           return (
             <Track
+              key={'track' + index} 
               uploadAudio={this.uploadAudio}
               audioSrc={track.src}
               recordStart={this.recordTrack}
-              key={'track' + index} 
               trackId={track.id} 
               setTrackEffects={this.props.actions.setTrackEffects} 
               liveNode={this.props.session.liveNode}
-              playing={this.props.session.play} />
+              playing={this.props.session.play}
+              deleteTrack={this.deleteTrack} />
           );
         })}
-        
-        <button onClick={this.props.actions.addTrack}>Add</button>
+
+        <button onClick={this.addTrack}>Add</button>
       </div>
     );
   }
 };
 
 function mapStateToProps(state) {
-  console.log(state.session.liveNode);
   return {
     session: state.session,
     tracks: state.tracks
@@ -173,24 +187,29 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  graphql(playState),
-  mapProps(({data, ...props}) => {
-    const subscribeToMore = data && data.subscribeToMore;
-    return {
-      subscribeToSessionState: () => {
-        return subscribeToMore({
-          document: onPlayStateChanged,
-          onError: (e) => {
-            return console.error('Error: ', e)
-          },
-          updateQuery: () => {  
-            console.log('triggered play')
-            props.actions.playProject();
-          }
-        })
-      },
-      ...props
-    }
+  graphql(appState),
+  graphql(tracksState, {
+    options: (props) => ({
+      variables: {
+        sessionid: props.session.id
+      }
+    })
   }),
-  pure //once props grow, convert to onlyUpdateForKeys
+  graphql(audioClipsState, {
+    options: (props) => ({
+      variables: {
+        sessionid: props.session.id
+      }
+    })
+  }),
+  mapProps(({data, ...props}) => ({
+    subscribeToMore: data && data.subscribeToMore,
+    subscribeToSessionPlay,
+    subscribeToSessionStop,
+    subscribeToAddTrack,
+    subscribeToDeleteTrack,
+    subscribeToAudioUpload,
+    ...props
+  })),
+  pure
 )(MainPage);

@@ -26,15 +26,4 @@ export const getTrack = createSelector(
     }
 );
 
-//Run this to see why reselect is optimal
-export const getTrackNoReselect = state => {
-    const tracks = trackSelector(state);
-    const trackId = trackIdSelector(state);
-
-    const track = tracks.find((track) => {
-        return track.id === trackId;
-    });
-    return track;
-}
-
 export default rootReducer;

@@ -5,7 +5,9 @@ export default {
     play: false,
     recording: false,
     tempo: 120,
-    liveNode: -1 //not live
+    liveNode: -1, //not live
+    testSrc: '',
+    id: 1
   },
   visibleEffect: {
     id: 0,
@@ -14,7 +16,6 @@ export default {
   tracks: [
     {
       id: 0,
-      divisions: 0,
       src: ''
     }
   ]

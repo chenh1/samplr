@@ -8,9 +8,9 @@ import config from '../webpack.config.dev';
 const bundler = webpack(config);
 
 browserSync({
-  port: 3005,
+  port: 3004,
   ui: {
-    port: 3006
+    port: 3005
   },
   server: {
     baseDir: 'src',

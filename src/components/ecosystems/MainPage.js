@@ -127,7 +127,6 @@ class MainPage extends React.Component {
     navigator.mediaDevices.getUserMedia({audio:true})
       .then(stream => {
         this.recorder = new MediaRecorder(stream);
-        console.log(this.recorder)
         this.recorder.ondataavailable = e => {
           audioChunks.push(e.data);
           if (this.recorder.state == "inactive"){

@@ -27,7 +27,6 @@ export default function trackManageReducer(state = initialState.session, action)
             newState.recording = true;
             return newState;
         case types.DOWNLOADED:
-            console.log(action.src);
             newState.testSrc = action.src;
             return newState;
         default:

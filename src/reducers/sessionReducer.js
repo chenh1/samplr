@@ -18,7 +18,6 @@ export default function trackManageReducer(state = initialState.session, action)
             newState.liveNode = -1;
             return newState;
         case types.INCREMENT_LIVE_NODE:
-            console.log('increment in reducer', newState.liveNode)
             newState.liveNode++;
             return newState;
         case types.LOOP_LIVE_NODE:

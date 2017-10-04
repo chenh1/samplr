@@ -9,6 +9,7 @@ export const loopLiveNode = () => ({ type: types.LOOP_LIVE_NODE });
 export const recordStart = () => ({ type: types.RECORD_START });
 export const playProjectLiveDone = () => ({ type: types.PLAY_PROJECT_LIVE_DONE });
 export const downloadedAudio = srcs => ({ type: types.AUDIO_DOWNLOADED, srcs });
+export const fileUploaded = () => ({ type: types.FILE_UPLOADED });
 
 export const playProjectLive = () => (
     dispatch => {
@@ -40,7 +41,7 @@ export const uploadFile = (formData, sessionId, trackId) => {
             method:"POST", 
             body: formData 
         }).then(data => {
-            dispatch(stopProject());
+            dispatch(fileUploaded());
             return data;
         })
     }

@@ -12,6 +12,11 @@ import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
 import * as helpers from '../../helpers/looper';
 
+import Pizzicato from 'pizzicato';
+
+const delay = new Pizzicato.Effects.Delay();
+console.log(delay)
+
 class MainPage extends React.Component {
   constructor(props, context) {
     super(props, context);

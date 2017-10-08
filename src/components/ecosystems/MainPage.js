@@ -25,15 +25,15 @@ console.log(delay, delay.feedback)
 
 setTimeout(() => {
   let audioclip = document.getElementsByTagName('audio')[1];
-  let sound = new Pizzicato.Sound({
-    source: 'file',
-    options: { path: audioclip.src }
-  }, () => {
-    console.log('sound file loaded!')
+  console.log(audioclip.src);
+  let sound = new Pizzicato.Sound(
+    audioclip.src, () => {
+    console.log('sound file loaded!');
+    sound.addEffect(delay)
+    sound.play();
   })
 
-  sound.addEffect(delay)
-  sound.play();
+  
 }, 2000)
 
 class MainPage extends React.Component {

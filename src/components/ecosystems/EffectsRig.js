@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import {compose, pure} from 'recompose';
 import * as actions from '../../actions/effectsRigActions';
 import {getTrack} from '../../reducers';
+import { EffectsUnit } from '../organisms';
 
 const EffectsRig = (props) => {
     return (
@@ -13,7 +14,7 @@ const EffectsRig = (props) => {
             {props.effectsSuite.map(effect => (
                 <button>{effect.name}</button>
             ))}
-            
+            <EffectsUnit />
         </div>
     );
 };

@@ -51,6 +51,7 @@ class MainPage extends React.Component {
     this.deleteTrack = this.deleteTrack.bind(this);
     this.setLooper;
     this.recorder;
+    //this.audioGroup;
   }
 
   componentWillMount() {
@@ -65,7 +66,22 @@ class MainPage extends React.Component {
   componentDidMount() {
     this.props.actions.loadTracks(this.props.session.id);
     this.props.actions.downloadAudio(this.props.session.id);
+    //this.setupAudioClips
   }
+
+  /*
+  setupAudioClips() {
+    let audioClipArray = this.props.tracks.map((track) => {
+      if (track.src) {
+        return new Pizzicato.Sound(track.src, () => {
+          console.log('clip loaded')
+        })
+      }
+    })
+
+    this.audioGroup(audioClipArray)
+  }
+  */
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.session.livePlay !== this.props.session.livePlay) {
@@ -88,6 +104,8 @@ class MainPage extends React.Component {
         track.play();
       }
     })
+
+    //
   }
 
   playProject() {

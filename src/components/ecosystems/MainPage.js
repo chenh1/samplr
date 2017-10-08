@@ -52,6 +52,7 @@ class MainPage extends React.Component {
     this.setLooper;
     this.recorder;
     //this.audioGroup;
+    //this.soundCollection;
   }
 
   componentWillMount() {
@@ -71,7 +72,7 @@ class MainPage extends React.Component {
 
   /*
   setupAudioClips() {
-    let audioClipArray = this.props.tracks.map((track) => {
+    this.soundCollection = this.props.tracks.map((track) => {
       if (track.src) {
         return new Pizzicato.Sound(track.src, () => {
           console.log('clip loaded')
@@ -79,7 +80,8 @@ class MainPage extends React.Component {
       }
     })
 
-    this.audioGroup(audioClipArray)
+    this.audioGroup(this.soundCollection)
+    //use this.audioGroup.addSound(mySound) to push new clips when done recording (.removeSound to delete)
   }
   */
 

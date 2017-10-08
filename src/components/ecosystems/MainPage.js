@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { compose, mapProps, withHandlers, pure } from 'recompose';
 import { graphql } from 'react-apollo';
-import { MainControls, Track, EffectsRig } from '../organisms';
+import { MainControls, Track } from '../organisms';
 import { subscribeToAddTrack, subscribeToSessionPlay, subscribeToSessionStop, subscribeToDeleteTrack, subscribeToAudioUpload } from '../../client/subscriptions';
 import { appState, tracksState, audioClipsState } from '../../client/sessionSchemas';
+import EffectsRig from './EffectsRig';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
@@ -149,7 +150,7 @@ class MainPage extends React.Component {
     return (
       <div>
         <MainControls playProjectLive={this.props.actions.playProjectLive} playProject={this.playProject} stopProject={this.stopProject}/>
-        <EffectsRig onClick={this.props.actions.toggleReverbAsync}/>
+        <EffectsRig />
 
         {this.props.tracks.map((track, index) => {
           return (

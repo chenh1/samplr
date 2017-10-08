@@ -2,14 +2,14 @@ import { combineReducers } from 'redux';
 import {routerReducer} from 'react-router-redux';
 import {createSelector} from 'reselect';
 import tracks from './trackManageReducer';
-import visibleEffect from './effectsRigReducer';
+import effectsRig from './effectsRigReducer';
 import session from './sessionReducer';
 import { ApolloClient, ApolloProvider } from 'react-apollo';
 
 export const client = new ApolloClient();
 
 const rootReducer = combineReducers({
-    visibleEffect,
+    effectsRig,
     tracks,
     session,
     apollo: client.reducer(),
@@ -17,12 +17,12 @@ const rootReducer = combineReducers({
 });
 
 export const trackSelector = state => state.tracks;
-export const trackIdSelector = state => state.visibleEffect.id;
+export const trackIdSelector = state => state.effectsRig.id;
 
 export const getTrack = createSelector(
     trackSelector, trackIdSelector,
-    (tracks, visibleEffectId) => {
-        return tracks.find(track => track.id === visibleEffectId)
+    (tracks, effectsRigId) => {
+        return tracks.find(track => track.id === effectsRigId)
     }
 );
 

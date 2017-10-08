@@ -10,9 +10,10 @@ const EffectsRig = (props) => {
     return (
         <div>
             <p>Track No: {props.track.id}</p>
-            <p>Divisions: {props.track.divisions}</p>
-            <button onClick={props.actions.toggleReverbAsync}>Trigger change</button>
-            <p>Reverb toggled {props.counter} times</p>
+            {props.effectsSuite.map(effect => (
+                <button>{effect.name}</button>
+            ))}
+            
         </div>
     );
 };
@@ -20,7 +21,8 @@ const EffectsRig = (props) => {
 function mapStateToProps(state) {
     return {
         track: getTrack(state),
-        counter: state.visibleEffect.counter
+        counter: state.effectsRig.counter,
+        effectsSuite: state.effectsRig.effectsSuite
     };
 }
 

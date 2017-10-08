@@ -1,6 +1,6 @@
 import initialState from './initialState';
 
-export default function effectsRigReducer(state = initialState.visibleEffect, action) {
+export default function effectsRigReducer(state = initialState.effectsRig, action) {
     let newState = Object.assign({}, state);
 
     switch (action.type) {

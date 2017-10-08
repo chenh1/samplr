@@ -9,9 +9,15 @@ export default {
     testSrc: '',
     id: 1
   },
-  visibleEffect: {
+  effectsRig: {
     id: 0,
-    counter: 0
+    counter: 0,
+    effectsSuite: [
+      {name: 'reverb'},
+      {name: 'delay'},
+      {name: 'multiBandEq'},
+      {name: 'multiBandGain'}
+    ]
   },
   tracks: [
     {

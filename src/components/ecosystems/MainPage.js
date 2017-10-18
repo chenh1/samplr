@@ -12,9 +12,9 @@ import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
 import * as helpers from '../../helpers/looper';
-
 import Pizzicato from 'pizzicato';
 
+/*
 const delay = new Pizzicato.Effects.Delay({
     feedback: 0.8,
     time: 0.22,
@@ -34,6 +34,7 @@ setTimeout(() => {
   })
   
 }, 2000)
+*/
 
 class MainPage extends React.Component {
   constructor(props, context) {
@@ -76,9 +77,7 @@ class MainPage extends React.Component {
   setupAudioClips() {
     this.soundCollection = this.props.tracks.map(track => {
       if (track.src) {
-        return new Pizzicato.Sound(track.src, () => {
-          console.log('clip loaded', this)
-        })
+        return new Pizzicato.Sound(track.src);
       }
     }).filter(track => track !== undefined)
 

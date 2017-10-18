@@ -28,11 +28,10 @@ setTimeout(() => {
   console.log(audioclip.src);
   let sound = new Pizzicato.Sound(
     audioclip.src, () => {
-    console.log('sound file loaded!');
+    console.log('sound file loaded!', this);
     sound.addEffect(delay)
     //sound.play();
   })
-
   
 }, 2000)
 
@@ -73,21 +72,17 @@ class MainPage extends React.Component {
       this.setupAudioClips();
     }, 2000)
   }
-
   
   setupAudioClips() {
     this.soundCollection = this.props.tracks.map(track => {
       if (track.src) {
         return new Pizzicato.Sound(track.src, () => {
-          console.log('clip loaded')
+          console.log('clip loaded', this)
         })
       }
     }).filter(track => track !== undefined)
-    console.log(this.soundCollection)
-    this.audioGroup = new Pizzicato.Group(this.soundCollection,
-      () => this.audioGroup.play()
-    );
-    
+
+    this.audioGroup = new Pizzicato.Group(this.soundCollection);    
     //use this.audioGroup.addSound(mySound) to push new clips when done recording (.removeSound to delete)
   }
 
@@ -107,13 +102,7 @@ class MainPage extends React.Component {
   }
 
   playAllTracks() {
-    [].slice.call(document.querySelectorAll('audio')).forEach((track) => {
-      if (track.getAttribute('src') !== '') {
-        track.play();
-      }
-    })
-
-    //
+    this.audioGroup.play();
   }
 
   playProject() {

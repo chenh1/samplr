@@ -7,7 +7,6 @@ const Track = ({min, max, trackId, setTrackEffects, liveNode, recordStart, audio
         <div className={"track" + (audioSrc ? " loaded" : "")}>
             <TrackControl deleteTrack={deleteTrack} uploadAudio={uploadAudio} recordStart={recordStart} trackId={trackId} setTrackEffects={setTrackEffects} />
             <BeatGrid liveNode={liveNode} />
-            {playing ? <audio autoPlay src={audioSrc}/> : <audio src={audioSrc}/>}
         </div>
     );
 };

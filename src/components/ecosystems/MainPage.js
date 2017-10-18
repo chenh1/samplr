@@ -30,7 +30,7 @@ setTimeout(() => {
     audioclip.src, () => {
     console.log('sound file loaded!');
     sound.addEffect(delay)
-    sound.play();
+    //sound.play();
   })
 
   
@@ -49,10 +49,11 @@ class MainPage extends React.Component {
     this.uploadFileToFetch = this.uploadFileToFetch.bind(this);
     this.addTrack = this.addTrack.bind(this);
     this.deleteTrack = this.deleteTrack.bind(this);
+    this.setupAudioClips = this.setupAudioClips.bind(this);
     this.setLooper;
     this.recorder;
-    //this.audioGroup;
-    //this.soundCollection;
+    this.audioGroup;
+    this.soundCollection;
   }
 
   componentWillMount() {
@@ -67,23 +68,28 @@ class MainPage extends React.Component {
   componentDidMount() {
     this.props.actions.loadTracks(this.props.session.id);
     this.props.actions.downloadAudio(this.props.session.id);
-    //this.setupAudioClips
+
+    setTimeout(() => {
+      this.setupAudioClips();
+    }, 2000)
   }
 
-  /*
+  
   setupAudioClips() {
-    this.soundCollection = this.props.tracks.map((track) => {
+    this.soundCollection = this.props.tracks.map(track => {
       if (track.src) {
         return new Pizzicato.Sound(track.src, () => {
           console.log('clip loaded')
         })
       }
-    })
-
-    this.audioGroup(this.soundCollection)
+    }).filter(track => track !== undefined)
+    console.log(this.soundCollection)
+    this.audioGroup = new Pizzicato.Group(this.soundCollection,
+      () => this.audioGroup.play()
+    );
+    
     //use this.audioGroup.addSound(mySound) to push new clips when done recording (.removeSound to delete)
   }
-  */
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.session.livePlay !== this.props.session.livePlay) {

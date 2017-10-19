@@ -4,11 +4,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {compose, pure} from 'recompose';
 import * as actions from '../../actions/effectsRigActions';
-import {getTrack} from '../../reducers';
+import { getTrack, getTrackEffects, getSelectedEffect } from '../../reducers';
 import { EffectsUnit } from '../organisms';
 
 const EffectsRig = (props) => {
-    console.log(props)
     return (
         <div>
             <p>Track No: {props.track.id}</p>
@@ -29,7 +28,8 @@ function mapStateToProps(state) {
     return {
         track: getTrack(state),
         effectsSuite: state.effectsRig.effectsSuite,
-        effectsEntries: state.effects //build selector to retrieve entries relevant to track only
+        effectsEntries: getTrackEffects(state),
+        selectedEffect: getSelectedEffect(state)
     };
 }
 

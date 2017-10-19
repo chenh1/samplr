@@ -1,6 +1,6 @@
 import initialState from './initialState';
 
-export default function effectsRigReducer(state = initialState.effectsRig, action) {
+export function effectsRigReducer(state = initialState.effectsRig, action) {
     let newState = Object.assign({}, state);
 
     switch (action.type) {
@@ -10,6 +10,15 @@ export default function effectsRigReducer(state = initialState.effectsRig, actio
         case 'TOGGLE_REVERB':
             newState.counter++
             return newState;
+        default:
+            return state;
+    }
+}
+
+export function effects(state = initialState.effects, action) {
+    let newState = [...state];
+
+    switch (action.type) {
         default:
             return state;
     }

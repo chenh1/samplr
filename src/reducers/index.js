@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import {routerReducer} from 'react-router-redux';
 import {createSelector} from 'reselect';
 import tracks from './trackManageReducer';
-import effectsRig from './effectsRigReducer';
+import { effectsRig, effects } from './effectsRigReducer';
 import session from './sessionReducer';
 import { ApolloClient, ApolloProvider } from 'react-apollo';
 
@@ -10,6 +10,7 @@ export const client = new ApolloClient();
 
 const rootReducer = combineReducers({
     effectsRig,
+    effects,
     tracks,
     session,
     apollo: client.reducer(),

@@ -16,6 +16,7 @@ const EffectsRig = (props) => {
                 <button>{effect.name}</button>
             ))}
 
+            
             <EffectsUnit />
         </div>
     );

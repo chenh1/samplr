@@ -15,7 +15,7 @@ const EffectsRig = (props) => {
             {props.effectsSuite.map(effect => (
                 <button>{effect.name}</button>
             ))}
-            
+
             <EffectsUnit />
         </div>
     );
@@ -25,7 +25,8 @@ function mapStateToProps(state) {
     return {
         track: getTrack(state),
         counter: state.effectsRig.counter,
-        effectsSuite: state.effectsRig.effectsSuite
+        effectsSuite: state.effectsRig.effectsSuite,
+        effectsEntries: state.effects //build selector to retrieve entries relevant to track only
     };
 }
 

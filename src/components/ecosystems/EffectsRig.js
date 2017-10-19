@@ -13,12 +13,12 @@ const EffectsRig = (props) => {
         <div>
             <p>Track No: {props.track.id}</p>
             <p>Add an effect:</p>
-            {props.effectsSuite.map(effect => (
-                <button>{effect.name}</button>
+            {props.effectsSuite.map((effect, index) => (
+                <button key={index}>{effect.name}</button>
             ))}
 
-            {props.effectsEntries.map(entry => (
-                <p>{entry.type}</p>
+            {props.effectsEntries.map((entry, index) => (
+                <p key={index}>{entry.type}</p>
             ))}
             <EffectsUnit />
         </div>

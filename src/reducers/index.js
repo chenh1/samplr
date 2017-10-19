@@ -28,4 +28,8 @@ export const getTrack = createSelector(
     }
 );
 
+export const getSelectedEffect = state => (
+    state.effects.find(effect => effect.isSelected) || state.effects
+);
+
 export default rootReducer;

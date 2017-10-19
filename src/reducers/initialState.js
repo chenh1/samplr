@@ -22,6 +22,7 @@ export default {
     {
       id: 0,
       trackId: 0,
+      isSelected: false,
       type: 'delay',
       isOn: false, //false sets mix to zero
       order: 0,

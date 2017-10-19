@@ -31,6 +31,19 @@ export default {
         time: 0.22,
         mix: 0.75
       }
+    },
+    {
+      id: 1,
+      trackId: 1,
+      isSelected: false,
+      type: 'ping-pong delay',
+      isOn: false, //false sets mix to zero
+      order: 0,
+      settings: {
+        feedback: 0.8,
+        time: 0.22,
+        mix: 0.75
+      }
     }
   ],
   tracks: [

@@ -19,7 +19,7 @@ const EffectsRig = (props) => {
             {props.effectsEntries.map((entry, index) => (
                 <p key={index}>{entry.type}</p>
             ))}
-            <EffectsUnit />
+            <EffectsUnit settings={props.selectedEffect}/>
         </div>
     );
 };

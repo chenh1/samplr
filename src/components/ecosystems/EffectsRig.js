@@ -21,6 +21,7 @@ const EffectsRig = (props) => {
                 {props.effectsEntries.map((entry, index) => (
                     <button 
                         key={index}
+                        data-track-id={entry.trackId}
                         onClick={props.actions.effectSelectedForEdit}  
                         value={entry.id}>
                             {entry.type}

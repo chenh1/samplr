@@ -5,5 +5,11 @@ export const setTrackEffects = e => (
 );
 
 export const effectSelectedForEdit = e => (
-    { type: types.EFFECT_SELECTED_FOR_EDIT, effectId: parseInt(e.target.value, 10) }
+    { type: types.EFFECT_SELECTED_FOR_EDIT, 
+        effect: 
+        {
+            id: parseInt(e.target.value, 10),
+            trackId: parseInt(e.target.getAttribute('data-track-id'), 10)
+        }
+    }
 ); 

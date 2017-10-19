@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
 
 export const trackSelector = state => state.tracks;
 export const trackIdSelector = state => state.effectsRig.id;
+export const effectsSelector = state => state.effects;
 
 export const getTrack = createSelector(
     trackSelector, trackIdSelector,
@@ -28,8 +29,16 @@ export const getTrack = createSelector(
     }
 );
 
-export const getSelectedEffect = state => (
-    state.effects.find(effect => effect.isSelected) || state.effects
+export const getTrackEffects = createSelector(
+    effectsSelector, trackIdSelector,
+    (effects, effectsRigId) => {
+        return effects.filter(effect => effect.trackId === effectsRigId)
+    }
+)
+
+export const getSelectedEffect = createSelector(
+    getTrackEffects,
+    effects => effects.find(effect => effect.isSelected) || effects[0]
 );
 
 export default rootReducer;

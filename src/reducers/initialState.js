@@ -23,7 +23,7 @@ export default {
       id: 0,
       trackId: 0,
       type: 'delay',
-      isOn: false,
+      isOn: false, //false sets mix to zero
       order: 0,
       settings: {
         feedback: 0.8,

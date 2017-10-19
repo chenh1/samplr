@@ -16,9 +16,18 @@ const EffectsRig = (props) => {
                 <button key={index}>{effect.name}</button>
             ))}
 
-            {props.effectsEntries.map((entry, index) => (
-                <p key={index}>{entry.type}</p>
-            ))}
+            <div>
+                This track's added effects:
+                {props.effectsEntries.map((entry, index) => (
+                    <button 
+                        key={index}
+                        onClick={props.actions.effectSelectedForEdit}  
+                        value={entry.id}>
+                            {entry.type}
+                    </button>
+                ))}
+            </div>
+
             <EffectsUnit {...props.selectedEffect}/>
         </div>
     );

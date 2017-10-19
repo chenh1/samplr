@@ -1,9 +1,14 @@
 import React from 'react';
 
-const EffectsUnit = ({}) => {
+const EffectsUnit = (props) => {
+    console.log(props);
     return (
         <div>
-            Effects Unit
+            {props.type}
+            {props.isOn}
+            {props.settings.feedback}
+            {props.settings.time}
+            {props.settings.mix}
         </div>
     );
 };

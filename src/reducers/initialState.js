@@ -22,13 +22,25 @@ export default {
     {
       id: 0,
       trackId: 0,
-      isSelected: false,
+      isSelected: true,
       type: 'delay',
       isOn: false, //false sets mix to zero
       order: 0,
       settings: {
         feedback: 0.8,
         time: 0.22,
+        mix: 0.75
+      }
+    },
+    {
+      id: 2,
+      trackId: 0,
+      isSelected: false,
+      type: 'chorus',
+      isOn: false, //false sets mix to zero
+      order: 1,
+      settings: {
+        feedback: 0.8,
         mix: 0.75
       }
     },
@@ -40,9 +52,9 @@ export default {
       isOn: false, //false sets mix to zero
       order: 0,
       settings: {
-        feedback: 0.8,
-        time: 0.22,
-        mix: 0.75
+        feedback: 0.3,
+        time: 0.85,
+        mix: 0.45
       }
     }
   ],

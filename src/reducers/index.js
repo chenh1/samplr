@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import {routerReducer} from 'react-router-redux';
 import {createSelector} from 'reselect';
 import tracks from './trackManageReducer';
-import { effectsRig, effects } from './effectsRigReducer';
+import effectsRig from './effectsRigReducer';
+import effects from './effectsEntryReducer';
 import session from './sessionReducer';
 import { ApolloClient, ApolloProvider } from 'react-apollo';
 

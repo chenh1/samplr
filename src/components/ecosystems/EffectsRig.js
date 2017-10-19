@@ -8,6 +8,7 @@ import {getTrack} from '../../reducers';
 import { EffectsUnit } from '../organisms';
 
 const EffectsRig = (props) => {
+    console.log(props)
     return (
         <div>
             <p>Track No: {props.track.id}</p>
@@ -16,7 +17,9 @@ const EffectsRig = (props) => {
                 <button>{effect.name}</button>
             ))}
 
-            
+            {props.effectsEntries.map(entry => (
+                <p>{entry.type}</p>
+            ))}
             <EffectsUnit />
         </div>
     );
@@ -25,7 +28,6 @@ const EffectsRig = (props) => {
 function mapStateToProps(state) {
     return {
         track: getTrack(state),
-        counter: state.effectsRig.counter,
         effectsSuite: state.effectsRig.effectsSuite,
         effectsEntries: state.effects //build selector to retrieve entries relevant to track only
     };

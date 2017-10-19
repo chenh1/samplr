@@ -11,14 +11,27 @@ export default {
   },
   effectsRig: {
     id: 0,
-    counter: 0,
-    effectsSuite: [
+    effectsSuite: [ //static data; only describes effects...
       {name: 'reverb'},
       {name: 'delay'},
       {name: 'multiBandEq'},
       {name: 'multiBandGain'}
     ]
   },
+  effects: [
+    {
+      id: 0,
+      trackId: 0,
+      type: 'delay',
+      isOn: false,
+      order: 0,
+      settings: {
+        feedback: 0.8,
+        time: 0.22,
+        mix: 0.75
+      }
+    }
+  ],
   tracks: [
     {
       id: 0,

@@ -11,9 +11,11 @@ const EffectsRig = (props) => {
     return (
         <div>
             <p>Track No: {props.track.id}</p>
+            <p>Add an effect:</p>
             {props.effectsSuite.map(effect => (
                 <button>{effect.name}</button>
             ))}
+            
             <EffectsUnit />
         </div>
     );

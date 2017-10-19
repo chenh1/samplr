@@ -14,28 +14,6 @@ import * as sessionActions from '../../actions/sessionActions';
 import * as helpers from '../../helpers/looper';
 import Pizzicato from 'pizzicato';
 
-/*
-const delay = new Pizzicato.Effects.Delay({
-    feedback: 0.8,
-    time: 0.22,
-    mix: 0.75
-});
-
-console.log(delay, delay.feedback)
-
-setTimeout(() => {
-  let audioclip = document.getElementsByTagName('audio')[1];
-  console.log(audioclip.src);
-  let sound = new Pizzicato.Sound(
-    audioclip.src, () => {
-    console.log('sound file loaded!', this);
-    sound.addEffect(delay)
-    //sound.play();
-  })
-  
-}, 2000)
-*/
-
 class MainPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -101,6 +79,14 @@ class MainPage extends React.Component {
   }
 
   playAllTracks() {
+    const delay = new Pizzicato.Effects.Delay({
+      feedback: 0.8,
+      time: 0.22,
+      mix: 0.75
+    });
+    this.soundCollection[0].addEffect(delay);
+    console.log(this.soundCollection);
+    console.log(this.audioGroup);
     this.audioGroup.play();
   }
 

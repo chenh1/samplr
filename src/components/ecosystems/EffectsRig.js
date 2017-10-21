@@ -13,7 +13,12 @@ const EffectsRig = (props) => {
             <p>Track No: {props.track.id}</p>
             <p>Add an effect:</p>
             {props.effectsSuite.map((effect, index) => (
-                <button key={index}>{effect.name}</button>
+                <button 
+                    onClick={props.actions.addEffectToChain} 
+                    data-type={effect.name}
+                    key={index}>
+                        {effect.name}
+                </button>
             ))}
 
             <div>

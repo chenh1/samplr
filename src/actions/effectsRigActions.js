@@ -12,4 +12,13 @@ export const effectSelectedForEdit = e => (
             trackId: parseInt(e.target.getAttribute('data-track-id'), 10)
         }
     }
-); 
+);
+
+export const addEffectToChain = e => (
+    { type: types.ADD_EFFECT_TO_CHAIN,
+        effect:
+        {
+            type: e.target.getAttribute('data-type')
+        } 
+    }
+)

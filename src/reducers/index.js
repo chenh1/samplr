@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
     routing: routerReducer
 });
 
+export const sessionIdSelector = state => state.session.id;
 export const trackSelector = state => state.tracks;
 export const trackIdSelector = state => state.effectsRig.id;
 export const effectsSelector = state => state.effects;

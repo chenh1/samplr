@@ -1,4 +1,19 @@
+import { apiPath } from '../apiPath';
 import * as types from './actionTypes';
+
+export const getAllEffectsDone = () => (
+    { type: types.GET_ALL_EFFECTS_DONE }
+);
+
+export const getAllEffects = sessionId => (
+    dispatch => {
+        fetch(`${apiPath}graphql?query{getEffects(sessionid:${sessionId})}`).then(data => {
+            dispatch(getAllEffectsDone());
+        }).catch(error => {
+            throw(error);
+        })
+    }
+);
 
 export const setTrackEffects = e => (
     { type: types.SET_TRACK_EFFECTS, trackId: parseInt(e.target.value, 10) }

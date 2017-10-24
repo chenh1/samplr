@@ -7,8 +7,11 @@ export const getAllEffectsDone = () => (
 
 export const getAllEffects = sessionId => (
     dispatch => {
-        fetch(`${apiPath}graphql?query{getEffects(sessionid:${sessionId})}`).then(data => {
-            dispatch(getAllEffectsDone());
+        fetch(`${apiPath}graphql?query={getEffects(sessionid:${sessionId}){id,trackid,type,ison,chainorder,settings{feedback,time,mix,speed,depth,lowGain,midLowGain,midHighGain,highGain,gain,decay,reverse,frequency,peak,distortion,threshold,ratio,pan}}}`).then(data => {
+            return data.json();
+        }).then(jsonData => {
+            console.log(jsonData)
+            dispatch(getAllEffectsDone(jsonData.data.getEffects));
         }).catch(error => {
             throw(error);
         })

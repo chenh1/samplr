@@ -8,17 +8,13 @@ export default function effects(state = initialState.effects, action) {
         case types.EFFECT_SELECTED_FOR_EDIT:
             const { trackId, id } = action.effect;
 
-            let selectedEffect = newState.filter(effect => (
-                effect.trackId === trackId && effect.id === id
-            ))[0];
+            newState = newState.map(effect => {
+                let isSelected = effect.trackId === trackId && effect.id === id;
 
-            let newEffect = Object.assign({}, selectedEffect, {isSelected: true});
+                return Object.assign({}, effect, {isSelected});
+            });
 
-            let newerState = newState.filter(effect => (
-                effect.id !== id
-            ));
-
-            return [...newerState, newEffect];
+            return newState;
         case types.ADD_EFFECT_TO_CHAIN:
             return newState;
         default:

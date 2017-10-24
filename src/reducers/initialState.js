@@ -46,6 +46,19 @@ export default {
     },
     {
       id: 1,
+      trackId: 0,
+      isSelected: false,
+      type: 'slapback delay',
+      isOn: false, //false sets mix to zero
+      order: 0,
+      settings: {
+        feedback: 0.3,
+        time: 0.85,
+        mix: 0.45
+      }
+    },
+    {
+      id: 1,
       trackId: 1,
       isSelected: false,
       type: 'ping-pong delay',

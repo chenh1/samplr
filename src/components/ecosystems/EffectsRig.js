@@ -7,36 +7,42 @@ import * as actions from '../../actions/effectsRigActions';
 import { getTrack, getTrackEffects, getSelectedEffect } from '../../reducers';
 import { EffectsUnit } from '../organisms';
 
-const EffectsRig = (props) => {
-    return (
-        <div>
-            <p>Track No: {props.track.id}</p>
-            <p>Add an effect:</p>
-            {props.effectsSuite.map((effect, index) => (
-                <button 
-                    onClick={props.actions.addEffectToChain} 
-                    data-type={effect.name}
-                    key={index}>
-                        {effect.name}
-                </button>
-            ))}
+class EffectsRig extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+    }
 
+    render(){
+        return (
             <div>
-                This track's added effects:
-                {props.effectsEntries.map((entry, index) => (
+                <p>Track No: {this.props.track.id}</p>
+                <p>Add an effect:</p>
+                {this.props.effectsSuite.map((effect, index) => (
                     <button 
-                        key={index}
-                        data-track-id={entry.trackId}
-                        onClick={props.actions.effectSelectedForEdit}  
-                        value={entry.id}>
-                            {entry.type}
+                        onClick={this.props.actions.addEffectToChain} 
+                        data-type={effect.name}
+                        key={index}>
+                            {effect.name}
                     </button>
                 ))}
-            </div>
 
-            <EffectsUnit {...props.selectedEffect}/>
-        </div>
-    );
+                <div>
+                    This track's added effects:
+                    {this.props.effectsEntries.map((entry, index) => (
+                        <button 
+                            key={index}
+                            data-track-id={entry.trackId}
+                            onClick={this.props.actions.effectSelectedForEdit}  
+                            value={entry.id}>
+                                {entry.type}
+                        </button>
+                    ))}
+                </div>
+
+                <EffectsUnit {...this.props.selectedEffect}/>
+            </div>
+        );
+    }
 };
 
 function mapStateToProps(state) {

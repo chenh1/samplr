@@ -2,18 +2,37 @@ import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {compose, pure} from 'recompose';
+import {compose, pure, mapProps} from 'recompose';
+import { graphql } from 'react-apollo';
 import * as actions from '../../actions/effectsRigActions';
+import { effectState } from '../../client/sessionSchemas';
 import { getTrack, getTrackEffects, getSelectedEffect, sessionIdSelector } from '../../reducers';
+import { subscribeToEffectAdded } from '../../client/subscriptions';
 import { EffectsUnit } from '../organisms';
 
 class EffectsRig extends React.Component {
     constructor(props, context) {
         super(props, context);
+
+        this.addEffect = this.addEffect.bind(this);
+    }
+
+    componentWillMount() {
+        const subscribeToMore = this.props.subscribeToMore;
+        this.props.subscribeToEffectAdded(this.props.actions.getSingleEffect, subscribeToMore);
     }
 
     componentDidMount() {
         this.props.actions.getAllEffects(this.props.sessionId);
+    }
+
+    addEffect(e) {
+        this.props.actions.addEffectToChain(
+            this.props.sessionId,
+            this.props.track.id,
+            8,
+            e.target.value
+        );
     }
 
     render(){
@@ -23,8 +42,8 @@ class EffectsRig extends React.Component {
                 <p>Add an effect:</p>
                 {this.props.effectsSuite.map((effect, index) => (
                     <button 
-                        onClick={this.props.actions.addEffectToChain} 
-                        data-type={effect.name}
+                        onClick={this.addEffect} 
+                        value={effect.name}
                         key={index}>
                             {effect.name}
                     </button>
@@ -67,5 +86,11 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  graphql(effectState),
+  mapProps(({data, ...props}) => ({
+    subscribeToMore: data && data.subscribeToMore,
+    subscribeToEffectAdded,
+    ...props
+  })),
   pure
 )(EffectsRig);

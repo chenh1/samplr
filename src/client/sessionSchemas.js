@@ -20,7 +20,39 @@ export const audioClipsState = gql`
       id
     }
   }
-`
+`;
+
+export const effectState = gql`
+  query ($sessionid: Int) {
+    getEffects(sessionid: $sessionid) {
+      id
+      trackid
+      type
+      ison
+      chainorder
+      settings {
+        feedback
+        time
+        mix
+        speed
+        depth
+        lowGain
+        midLowGain
+        midHighGain
+        highGain
+        gain
+        decay
+        reverse
+        frequency
+        peak
+        distortion
+        threshold
+        ratio
+        pan
+      }
+    }
+  }
+`;
 
 export const onTrackAdded = gql`
   subscription {
@@ -49,5 +81,11 @@ export const onStopActive = gql`
 export const onFileUploaded = gql`
   subscription {
     audioFileUploaded
+  }
+`;
+
+export const onEffectAdded = gql`
+  subscription {
+    effectAdded
   }
 `;

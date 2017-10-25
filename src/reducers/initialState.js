@@ -14,8 +14,8 @@ export default {
     effectsSuite: [ //static data; only describes effects...
       {name: 'reverb'},
       {name: 'delay'},
-      {name: 'multiBandEq'},
-      {name: 'multiBandGain'}
+      {name: 'flanger'},
+      {name: 'filter'}
     ]
   },
   effects: [

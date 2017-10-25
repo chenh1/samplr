@@ -1,9 +1,23 @@
 import { apiPath } from '../apiPath';
 import * as types from './actionTypes';
 
-export const getAllEffectsDone = () => (
-    { type: types.GET_ALL_EFFECTS_DONE }
+export const getEffectsDone = () => (
+    { type: types.GET_EFFECTS_DONE }
 );
+
+export const getSingleEffect = effectId => (
+    dispatch => {
+        fetch(`${apiPath}graphql?query={getEffects(id:${effectId}){id,trackid,type,ison,chainorder,settings{feedback,time,mix,speed,depth,lowGain,midLowGain,midHighGain,highGain,gain,decay,reverse,frequency,peak,distortion,threshold,ratio,pan}}}`).then(data => {
+            console.log(data);
+            return data.json();
+        }).then(jsonData => {
+            console.log(jsonData)
+            dispatch(getEffectsDone(jsonData.data.getEffects));
+        }).catch(error => {
+            throw(error);
+        })
+    }
+)
 
 export const getAllEffects = sessionId => (
     dispatch => {
@@ -11,7 +25,7 @@ export const getAllEffects = sessionId => (
             return data.json();
         }).then(jsonData => {
             console.log(jsonData)
-            dispatch(getAllEffectsDone(jsonData.data.getEffects));
+            dispatch(getEffectsDone(jsonData.data.getEffects));
         }).catch(error => {
             throw(error);
         })
@@ -32,11 +46,15 @@ export const effectSelectedForEdit = e => (
     }
 );
 
-export const addEffectToChain = e => (
-    { type: types.ADD_EFFECT_TO_CHAIN,
-        effect:
-        {
-            type: e.target.getAttribute('data-type')
-        } 
+export const effectAdded = () => ({ type: 'EFFECT_ADDED' });
+export const addEffectToChain = (sessionId, trackId, chainOrder, type) => (
+    dispatch => {
+        fetch(`${apiPath}graphql?query=mutation{addEffect(sessionid:${sessionId},trackid:${trackId},ison:true,chainorder:${chainOrder},type:"${type}"){id}}`, {
+            method:"POST"
+        }).then(data => {
+            dispatch(effectAdded());
+        }).catch(error => {
+            throw(error);
+        })
     }
 )

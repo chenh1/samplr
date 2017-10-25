@@ -1,4 +1,4 @@
-import { onTrackAdded, onTrackDeleted, onPlayActive, onStopActive, onFileUploaded } from '../client/sessionSchemas';
+import { onTrackAdded, onTrackDeleted, onPlayActive, onStopActive, onFileUploaded, onEffectAdded } from '../client/sessionSchemas';
 
 export const subscribeToSessionPlay = (callback, subscribeToMore) => (
     subscribeToMore({
@@ -45,3 +45,13 @@ export const subscribeToAudioUpload = (sessionId, callback, subscribeToMore) => 
         )
     })
 );
+
+export const subscribeToEffectAdded = (callback, subscribeToMore) => (
+    subscribeToMore({
+        document: onEffectAdded,
+        onError: e => console.error('Error: ', e),
+        updateQuery: (previousResult, results) => (
+            callback(results.subscriptionData.data.effectAdded)
+        )
+    })
+)

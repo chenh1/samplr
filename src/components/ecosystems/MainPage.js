@@ -213,14 +213,14 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   graphql(appState),
   graphql(tracksState, {
-    options: (props) => ({
+    options: props => ({
       variables: {
         sessionid: props.session.id
       }
     })
   }),
   graphql(audioClipsState, {
-    options: (props) => ({
+    options: props => ({
       variables: {
         sessionid: props.session.id
       }

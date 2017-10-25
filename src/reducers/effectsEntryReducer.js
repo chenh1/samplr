@@ -15,8 +15,20 @@ export default function effects(state = initialState.effects, action) {
             });
 
             return newState;
-        case types.ADD_EFFECT_TO_CHAIN:
-            return newState;
+        case types.GET_EFFECTS_DONE:
+            let fetchedEffects = action.effects.map(effect => {
+                return {
+                    id: effect.id,
+                    trackId: effect.trackid,
+                    type: effect.type,
+                    isOn: effect.ison,
+                    chainOrder: effect.chainorder,
+                    isSelected: false,
+                    settings: effect.settings
+                }
+            });
+
+            return [...newState, ...fetchedEffects];
         default:
             return state;
     }

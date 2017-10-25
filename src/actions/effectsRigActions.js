@@ -1,14 +1,13 @@
 import { apiPath } from '../apiPath';
 import * as types from './actionTypes';
 
-export const getEffectsDone = () => (
-    { type: types.GET_EFFECTS_DONE }
+export const getEffectsDone = (effects) => (
+    { type: types.GET_EFFECTS_DONE, effects }
 );
 
 export const getSingleEffect = effectId => (
     dispatch => {
         fetch(`${apiPath}graphql?query={getEffects(id:${effectId}){id,trackid,type,ison,chainorder,settings{feedback,time,mix,speed,depth,lowGain,midLowGain,midHighGain,highGain,gain,decay,reverse,frequency,peak,distortion,threshold,ratio,pan}}}`).then(data => {
-            console.log(data);
             return data.json();
         }).then(jsonData => {
             console.log(jsonData)

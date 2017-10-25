@@ -1,6 +1,9 @@
 import React from 'react';
 
 const EffectsUnit = (props) => {
+    let settings = Object.entries(props.settings)
+        .filter(setting => setting[1] !== null);
+    
     /*
         TODO:
         - Set filter/slider/spinners
@@ -12,9 +15,10 @@ const EffectsUnit = (props) => {
         <div>
             {props.type}
             {props.isOn}
-            {props.settings.feedback}
-            {props.settings.time}
-            {props.settings.mix}
+
+            {settings.map(setting => (
+                <p>{setting[0]}: {setting[1]}</p>
+            ))}
         </div>
     );
 };

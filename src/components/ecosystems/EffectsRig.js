@@ -44,7 +44,7 @@ class EffectsRig extends React.Component {
                     <button 
                         onClick={this.addEffect} 
                         value={effect.name}
-                        key={index}>
+                        key={'addEffect' + index}>
                             {effect.name}
                     </button>
                 ))}
@@ -53,7 +53,7 @@ class EffectsRig extends React.Component {
                     This track's added effects:
                     {this.props.effectsEntries.map((entry, index) => (
                         <button 
-                            key={index}
+                            key={'effectEntry' + index}
                             data-track-id={entry.trackId}
                             onClick={this.props.actions.effectSelectedForEdit}  
                             value={entry.id}>

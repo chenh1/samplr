@@ -15,6 +15,7 @@ class EffectsRig extends React.Component {
         super(props, context);
 
         this.addEffect = this.addEffect.bind(this);
+        this.changeSetting = this.changeSetting.bind(this);
     }
 
     componentWillMount() {
@@ -35,14 +36,17 @@ class EffectsRig extends React.Component {
         );
     }
 
+    changeSetting(e) {
+
+    }
+
     render(){
         return (
             <div>
                 <p>Track No: {this.props.track.id}</p>
                 <p>Add an effect:</p>
                 {this.props.effectsSuite.map((effect, index) => (
-                    <button 
-                        onClick={this.addEffect} 
+                    <button onClick={this.addEffect} 
                         value={effect.name}
                         key={'addEffect' + index}>
                             {effect.name}
@@ -52,8 +56,7 @@ class EffectsRig extends React.Component {
                 <div>
                     This track's added effects:
                     {this.props.effectsEntries.map((entry, index) => (
-                        <button 
-                            key={'effectEntry' + index}
+                        <button key={'effectEntry' + index}
                             data-track-id={entry.trackId}
                             onClick={this.props.actions.effectSelectedForEdit}  
                             value={entry.id}>
@@ -62,7 +65,11 @@ class EffectsRig extends React.Component {
                     ))}
                 </div>
 
-                <EffectsUnit {...this.props.selectedEffect}/>
+                <EffectsUnit effectId={this.props.selectedEffect.id}
+                    allSettings={this.props.selectedEffect.settings} 
+                    type={this.props.selectedEffect.type}
+                    isOn={this.props.selectedEffect.isOn} 
+                    changeSetting={this.changeSetting} />
             </div>
         );
     }

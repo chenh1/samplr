@@ -37,7 +37,7 @@ class EffectsRig extends React.Component {
     }
 
     changeSetting(e) {
-
+        console.log(e.target.value, e.target.getAttribute('data-effect-id'))
     }
 
     render(){

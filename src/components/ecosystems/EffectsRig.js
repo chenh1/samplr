@@ -40,7 +40,7 @@ class EffectsRig extends React.Component {
         this.props.actions.inputEffectSetting(
             parseInt(e.target.getAttribute('data-effect-id'), 10), 
             e.target.getAttribute('data-setting'), 
-            parseInt(e.target.value, 10)
+            parseFloat(e.target.value)
         );
     }
 

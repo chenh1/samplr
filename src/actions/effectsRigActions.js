@@ -58,10 +58,10 @@ export const addEffectToChain = (sessionId, trackId, chainOrder, type) => (
     }
 )
 
-export const effectSettingChanged = ({ type: 'EFFECT_CHANGED' });
-export const inputEffectSetting = (effectId, setting, value) => {
+export const effectSettingChanged = () => ({ type: 'EFFECT_CHANGED' });
+export const inputEffectSetting = (effectId, setting, value) => (
     dispatch => {
-        fetch(`${apiPath}graphql?query=mutation{changeEffectSetting(effectid:${effectId},setting:${setting},value:${value}){id}}`, {
+        fetch(`${apiPath}graphql?query=mutation{changeEffectSetting(id:${effectId},setting:"${setting}",value:${value}){id}}`, {
             method:"POST"
         }).then(data => {
             dispatch(effectSettingChanged());
@@ -69,4 +69,4 @@ export const inputEffectSetting = (effectId, setting, value) => {
             throw(error);
         })
     }
-}
+)

@@ -53,10 +53,24 @@ class MainPage extends React.Component {
     }, 2000)
   }
   
-  setupAudioClips() {
+  setupAudioClips() {    
     this.soundCollection = this.props.tracks.map(track => {
+      let sound;
+      let effect;
+      let type;
+      
       if (track.src) {
-        return new Pizzicato.Sound(track.src);
+        sound = new Pizzicato.Sound(track.src);
+        
+        this.props.effectsEntries.forEach((entry) => {
+          if (entry.trackId === track.id) {
+            type = entry.type.charAt(0).toUpperCase().concat(entry.type.substr(1));
+            effect = new Pizzicato.Effects[type](entry.settings);
+            sound.AddEffect(effect);
+          }
+        });
+
+        return sound;
       }
     }).filter(track => track !== undefined)
 

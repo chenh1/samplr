@@ -25,6 +25,7 @@ export const getAllEffects = sessionId => (
         }).then(jsonData => {
             console.log(jsonData)
             dispatch(getEffectsDone(jsonData.data.getEffects));
+            dispatch(getEffectsDone(jsonData.data.getEffects))
         }).catch(error => {
             throw(error);
         })

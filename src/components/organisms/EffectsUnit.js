@@ -15,7 +15,7 @@ const EffectsUnit = ({effectId, allSettings, type, isOn, changeSetting}) => {
                     <input type="range" step="0.01" min="0" max="1" defaultValue={setting[1]}
                         data-setting={setting[0]}
                         data-effect-id={effectId} 
-                        onMouseUp={changeSetting}/>
+                        onChange={changeSetting}/>
                 </p>
             ))}
         </div>

@@ -11,6 +11,7 @@ import EffectsRig from './EffectsRig';
 import * as trackManageActions from '../../actions/trackManageActions';
 import * as effectsRigActions from '../../actions/effectsRigActions';
 import * as sessionActions from '../../actions/sessionActions';
+import { getTrackEffects } from '../../reducers';
 import * as helpers from '../../helpers/looper';
 import Pizzicato from 'pizzicato';
 
@@ -194,7 +195,8 @@ class MainPage extends React.Component {
 function mapStateToProps(state) {
   return {
     session: state.session,
-    tracks: state.tracks
+    tracks: state.tracks,
+    effectsEntries: getTrackEffects(state)
   };
 }
 
